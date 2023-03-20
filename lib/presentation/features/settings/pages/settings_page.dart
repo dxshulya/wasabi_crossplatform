@@ -1,0 +1,23 @@
+import 'package:flutter/material.dart';
+import 'package:wasabi_crossplatform/utils/locals/locals.dart';
+
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({Key? key}) : super(key: key);
+
+  static const String navigationPath = '/settings';
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(context.locale.settings.title),
+      ),
+      body: Center(child: Text(context.locale.settings.title)),
+    );
+  }
+}
