@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_tasks.dart';
 import 'package:wasabi_crossplatform/presentation/common/empty.dart';
@@ -44,7 +45,7 @@ class _TasksPageState extends State<TasksPage> {
                 SavedPage.navigationPath,
               );
             },
-            icon: Icon(Icons.save),
+            icon: Icon(Icons.save_rounded),
           ),
           IconButton(
             onPressed: () {
@@ -62,7 +63,7 @@ class _TasksPageState extends State<TasksPage> {
                 SettingsPage.navigationPath,
               );
             },
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.settings_rounded),
           ),
         ],
       ),
@@ -85,6 +86,7 @@ class _TasksPageState extends State<TasksPage> {
                             ? data.data?.tasks.isNotEmpty == true
                                 ? Expanded(
                                     child: ListView.builder(
+                                      controller: _scrollController,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         final model = data.data?.tasks[index]
@@ -109,6 +111,21 @@ class _TasksPageState extends State<TasksPage> {
               }));
         },
       ),
+      floatingActionButton: FloatingActionButton(
+          child: const RotatedBox(
+            quarterTurns: 1,
+            child: Icon(
+              Icons.arrow_back_rounded,
+            ),
+          ),
+          onPressed: () {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              _scrollController?.animateTo(
+                  _scrollController?.position.minScrollExtent ?? 0,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.fastOutSlowIn);
+            });
+          }),
     );
   }
 

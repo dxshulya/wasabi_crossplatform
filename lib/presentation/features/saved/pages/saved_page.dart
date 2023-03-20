@@ -42,12 +42,9 @@ class _SavedPageState extends State<SavedPage> {
                 SettingsPage.navigationPath,
               );
             },
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.settings_rounded),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
       ),
       body: BlocBuilder<SavedBloc, SavedState>(
         buildWhen: (oldState, newState) => oldState.data != newState.data,

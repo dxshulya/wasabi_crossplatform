@@ -43,44 +43,53 @@ class TaskCard extends StatelessWidget {
             height: 16,
           ),
           Text(_model.answer),
+          const SizedBox(
+            height: 16,
+          ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              OutlinedButton(
-                onPressed: () {},
-                style: OutlinedButton.styleFrom(
-                  elevation: 0,
-                  side: BorderSide(width: 1.0, color: AppColors.brandGreenColor),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 4),
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      elevation: 0,
+                      side: BorderSide(width: 1.0, color: AppColors.brandGreenColor),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: AppColors.lightColorSchemeSeed,
+                    ),
+                    child: Icon(
+                      Icons.save_rounded,
+                      color: AppColors.brandGreenColor,
+                    ),
                   ),
-                  padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                  backgroundColor: Colors.transparent,
-                  foregroundColor: AppColors.lightColorSchemeSeed,
-                ),
-                child: Icon(
-                  Icons.save_rounded,
-                  color: AppColors.brandGreenColor,
                 ),
               ),
-              const SizedBox(
-                width: 8,
-              ),
-              OutlinedButton(
-                onPressed: () {},
-                style: OutlinedButton.styleFrom(
-                  elevation: 0,
-                  side: BorderSide(width: 1.0, color: AppColors.brandRedColor),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 4),
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      elevation: 0,
+                      side: BorderSide(width: 1.0, color: AppColors.brandRedColor),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: AppColors.lightColorSchemeSeed,
+                    ),
+                    child: Icon(
+                      Icons.favorite_outline_rounded,
+                      color: AppColors.brandRedColor,
+                    ),
                   ),
-                  padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                  backgroundColor: Colors.transparent,
-                  foregroundColor: AppColors.lightColorSchemeSeed,
-                ),
-                child: Icon(
-                  Icons.favorite_outline_rounded,
-                  color: AppColors.brandRedColor,
                 ),
               ),
             ],
