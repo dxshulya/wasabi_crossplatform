@@ -5,16 +5,19 @@ import 'package:wasabi_crossplatform/blocs/error_bloc/error_bloc.dart';
 import 'package:wasabi_crossplatform/blocs/error_bloc/error_event.dart';
 import 'package:wasabi_crossplatform/blocs/locale_bloc/locale_bloc.dart';
 import 'package:wasabi_crossplatform/blocs/locale_bloc/locale_state.dart';
+import 'package:wasabi_crossplatform/data/repositories/auth/api_login_repository.dart';
 import 'package:wasabi_crossplatform/data/repositories/favourites_tasks_repositories.dart';
 import 'package:wasabi_crossplatform/data/repositories/saved/api_saved_repository.dart';
 import 'package:wasabi_crossplatform/data/repositories/tasks/api_tasks_repository.dart';
 import 'package:wasabi_crossplatform/data/services/api/api_service.dart';
 import 'package:wasabi_crossplatform/domain/repositories/abstract_favourites_tasks_repository.dart';
+import 'package:wasabi_crossplatform/domain/repositories/auth/abstract_login_repository.dart';
 import 'package:wasabi_crossplatform/domain/repositories/saved/abstract_saved_repository.dart';
 import 'package:wasabi_crossplatform/domain/repositories/tasks/abstract_tasks_repository.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/pages/favourites_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/intro/pages/intro_page.dart';
+import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/pages/login_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/not_found/pages/not_found_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/registration/pages/registration_page.dart';
@@ -90,7 +93,32 @@ class MyApp extends StatelessWidget {
               if (settings.name == LoginPage.navigationPath) {
                 return MaterialPageRoute(
                   builder: (_) {
-                    return const LoginPage();
+                    return BlocProvider<ErrorBloc>(
+                      lazy: false,
+                      create: (context) => ErrorBloc(context: context),
+                      child: RepositoryProvider<AbstractLoginRepository>(
+                        lazy: false,
+                        create: (context) => ApiLoginRepository(
+                          apiService: ApiService(
+                            onErrorHandler: (String code, String message) {
+                              context.read<ErrorBloc>().add(
+                                    ShowDialogEvent(
+                                      title: code,
+                                      message: message,
+                                    ),
+                                  );
+                            },
+                          ),
+                        ),
+                        child: BlocProvider<LoginBloc>(
+                          lazy: false,
+                          create: (context) => LoginBloc(
+                            repository: context.read<AbstractLoginRepository>(),
+                          ),
+                          child: const LoginPage(),
+                        ),
+                      ),
+                    );
                   },
                 );
               }
@@ -123,11 +151,11 @@ class MyApp extends StatelessWidget {
                           apiService: ApiService(
                             onErrorHandler: (String code, String message) {
                               context.read<ErrorBloc>().add(
-                                ShowDialogEvent(
-                                  title: code,
-                                  message: message,
-                                ),
-                              );
+                                    ShowDialogEvent(
+                                      title: code,
+                                      message: message,
+                                    ),
+                                  );
                             },
                           ),
                         ),
@@ -156,11 +184,11 @@ class MyApp extends StatelessWidget {
                           apiService: ApiService(
                             onErrorHandler: (String code, String message) {
                               context.read<ErrorBloc>().add(
-                                ShowDialogEvent(
-                                  title: code,
-                                  message: message,
-                                ),
-                              );
+                                    ShowDialogEvent(
+                                      title: code,
+                                      message: message,
+                                    ),
+                                  );
                             },
                           ),
                         ),

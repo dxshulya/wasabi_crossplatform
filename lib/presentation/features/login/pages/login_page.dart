@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/widgets/email_text_field.dart';
 import 'package:wasabi_crossplatform/presentation/features/registration/pages/registration_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/pages/tasks_page.dart';
@@ -34,13 +36,13 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 64,
             ),
-            const EmailTextField(initialText: ''),
+            EmailTextField(onEmailFieldTextChanged: _onEmailFieldTextChanged),
             const SizedBox(
               height: 24,
             ),
             TextFormField(
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 labelText: context.locale.auth.password,
                 hintText: context.locale.auth.password,
               ),
@@ -70,8 +72,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    TasksPage.navigationPath, (Route<dynamic> route) => false);
+                // Navigator.of(context).pushNamedAndRemoveUntil(
+                //     TasksPage.navigationPath, (Route<dynamic> route) => false);
               },
               child: Text(context.locale.intro.loginBtnText),
             ),
@@ -83,9 +85,6 @@ class _LoginPageState extends State<LoginPage> {
 
   void _onEmailFieldTextChanged(String text) {
     // var emailChangedEvent = SearchPageChangedEvent(search: text);
-    // DelayedAction.run(() {
-    //   context.read<SearchPageBloc>().add(searchChangedEvent);
-    // });
+    // context.read<LoginBloc>().add(searchChangedEvent);
   }
-
 }

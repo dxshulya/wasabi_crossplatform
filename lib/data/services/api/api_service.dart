@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_favourites_dto.dart';
+import 'package:wasabi_crossplatform/data/dtos/api/api_login_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_tasks_dto.dart';
+import 'package:wasabi_crossplatform/data/dtos/api/api_user_dto.dart';
 import 'package:wasabi_crossplatform/data/repositories/interceptors/api_error_interceptor.dart';
 import 'dart:developer' as developer;
 class ApiService {
@@ -56,5 +58,14 @@ class ApiService {
       },
     );
     return FavouritesDTO.fromJson(response.data);
+  }
+
+  Future<LoginDTO> postLogin({required UserDTO user}) async {
+    String url = '$_baseURL/auth/login';
+    final Response<dynamic> response = await _dio.post<dynamic>(
+      url,
+      data: user.toJson(),
+    );
+    return LoginDTO.fromJson(response.data);
   }
 }
