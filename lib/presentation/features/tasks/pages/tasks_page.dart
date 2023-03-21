@@ -71,44 +71,42 @@ class _TasksPageState extends State<TasksPage> {
         buildWhen: (oldState, newState) => oldState.data != newState.data,
         builder: (context, state) {
           return RefreshIndicator(
-              onRefresh: _onRefresh,
-              child: Builder(builder: (context) {
-                _scrollController ??= PrimaryScrollController.of(context)
-                  ..addListener(_pagination);
-                return FutureBuilder<AbstractTasks>(
-                  future: state.data,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<AbstractTasks?> data) {
-                    return data.connectionState != ConnectionState.done
-                        ? const Center(
-                            child: Center(child: CircularProgressIndicator()))
-                        : data.hasData
-                            ? data.data?.tasks.isNotEmpty == true
-                                ? Expanded(
-                                    child: ListView.builder(
-                                      controller: _scrollController,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        final model = data.data?.tasks[index]
-                                            .toTaskCardModel();
+            onRefresh: _onRefresh,
+            child: Builder(builder: (context) {
+              _scrollController ??= PrimaryScrollController.of(context)
+                ..addListener(_pagination);
+              return FutureBuilder<AbstractTasks>(
+                future: state.data,
+                builder:
+                    (BuildContext context, AsyncSnapshot<AbstractTasks?> data) {
+                  return data.connectionState != ConnectionState.done
+                      ? const Center(
+                          child: Center(child: CircularProgressIndicator()))
+                      : data.hasData
+                          ? data.data?.tasks.isNotEmpty == true
+                              ? ListView.builder(
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final model = data.data?.tasks[index]
+                                        .toTaskCardModel();
 
-                                        if (model != null) {
-                                          return TaskCard(
-                                            index: index + 1,
-                                            model: model,
-                                          );
-                                        }
+                                    if (model != null) {
+                                      return TaskCard(
+                                        index: index + 1,
+                                        model: model,
+                                      );
+                                    }
 
-                                        return const ErrorHelper();
-                                      },
-                                      itemCount: data.data?.tasks.length ?? 0,
-                                    ),
-                                  )
-                                : const EmptyHelper()
-                            : const ErrorHelper();
-                  },
-                );
-              }));
+                                    return const ErrorHelper();
+                                  },
+                                  itemCount: data.data?.tasks.length ?? 0,
+                                )
+                              : const EmptyHelper()
+                          : const ErrorHelper();
+                },
+              );
+            }),
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(

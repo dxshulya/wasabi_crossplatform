@@ -5,6 +5,8 @@ abstract class AbstractFavouritesTasksRepository {
 
   Future<void> deleteFavouriteById(String id);
 
+  Future<void> deleteAllFavourites();
+
   Future<void> insertFavourite(AbstractTask task);
 
   bool checkForFavouriteById(String id);

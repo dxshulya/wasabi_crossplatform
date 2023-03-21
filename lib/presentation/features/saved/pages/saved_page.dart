@@ -64,6 +64,7 @@ class _SavedPageState extends State<SavedPage> {
                         : data.hasData
                             ? data.data?.saves.isNotEmpty == true
                                 ? ListView.builder(
+                                    controller: _scrollController,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       final model = data.data?.saves[index]

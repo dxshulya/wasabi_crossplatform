@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wasabi_crossplatform/data/mappers/db/db_data_mapper.dart';
+import 'package:wasabi_crossplatform/domain/repositories/abstract_favourites_tasks_repository.dart';
+import 'package:wasabi_crossplatform/presentation/common/favourites_checked_button.dart';
+import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
+import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_event.dart';
+import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/models/task_card_model.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 
@@ -55,11 +62,13 @@ class TaskCard extends StatelessWidget {
                     onPressed: () {},
                     style: OutlinedButton.styleFrom(
                       elevation: 0,
-                      side: BorderSide(width: 1.0, color: AppColors.brandGreenColor),
+                      side: BorderSide(
+                          width: 1.0, color: AppColors.brandGreenColor),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                      padding: const EdgeInsets.only(
+                          left: 0, right: 0, top: 0, bottom: 0),
                       backgroundColor: Colors.transparent,
                       foregroundColor: AppColors.lightColorSchemeSeed,
                     ),
@@ -73,21 +82,19 @@ class TaskCard extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 4),
-                  child: OutlinedButton(
-                    onPressed: () {},
-                    style: OutlinedButton.styleFrom(
-                      elevation: 0,
-                      side: BorderSide(width: 1.0, color: AppColors.brandRedColor),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: AppColors.lightColorSchemeSeed,
-                    ),
-                    child: Icon(
-                      Icons.favorite_outline_rounded,
-                      color: AppColors.brandRedColor,
+                  child: BlocBuilder<FavouritesBloc, FavouritesState>(
+                    builder: (context, state) => FavoritesCheckedButton(
+                      alignment: Alignment.centerRight,
+                      initialChecked: context
+                          .read<AbstractFavouritesTasksRepository>()
+                          .checkForFavouriteById(_model.id),
+                      onPressed: () {
+                        context.read<FavouritesBloc>().add(
+                              ChangedFavourite(
+                                model: _model.toDomain(),
+                              ),
+                            );
+                      },
                     ),
                   ),
                 ),

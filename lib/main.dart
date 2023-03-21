@@ -12,6 +12,7 @@ import 'package:wasabi_crossplatform/data/services/api/api_service.dart';
 import 'package:wasabi_crossplatform/domain/repositories/abstract_favourites_tasks_repository.dart';
 import 'package:wasabi_crossplatform/domain/repositories/saved/abstract_saved_repository.dart';
 import 'package:wasabi_crossplatform/domain/repositories/tasks/abstract_tasks_repository.dart';
+import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/pages/favourites_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/intro/pages/intro_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/pages/login_page.dart';
@@ -44,6 +45,12 @@ class MyApp extends StatelessWidget {
           BlocProvider<LocaleBloc>(
             lazy: false,
             create: (_) => LocaleBloc(),
+          ),
+          BlocProvider<FavouritesBloc>(
+            lazy: false,
+            create: (context) => FavouritesBloc(
+              repository: context.read<AbstractFavouritesTasksRepository>(),
+            ),
           ),
         ],
         child: BlocBuilder<LocaleBloc, LocaleState>(

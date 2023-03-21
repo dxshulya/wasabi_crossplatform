@@ -53,4 +53,9 @@ class FavouritesTasksRepository implements AbstractFavouritesTasksRepository {
   Future<List<AbstractTask>> onGetAllFavourites() async {
     return _service.getAllTasksDB();
   }
+
+  @override
+  Future<void> deleteAllFavourites() async {
+    await _service.deleteAll();
+  }
 }

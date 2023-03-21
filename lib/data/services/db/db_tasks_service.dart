@@ -31,6 +31,10 @@ class DBTasksService {
         .go();
   }
 
+  Future<void> deleteAll() async {
+    await _database.delete(_database.taskTable).go();
+  }
+
   Stream<List<AbstractTask>> onChangedTasksDB() {
     return (_database.select(_database.taskTable))
         .map((TaskTableData taskTableData) => taskTableData.toDomain())

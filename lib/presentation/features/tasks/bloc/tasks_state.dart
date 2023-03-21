@@ -7,7 +7,11 @@ class TasksState extends Equatable {
 
   const TasksState({this.data, this.page});
 
-  TasksState copyWith({Future<AbstractTasks>? data, int? page}) => TasksState(
+  TasksState copyWith({
+    Future<AbstractTasks>? data,
+    int? page,
+  }) =>
+      TasksState(
         data: data ?? this.data,
         page: page ?? this.page,
       );
