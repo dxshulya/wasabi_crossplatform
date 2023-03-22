@@ -23,7 +23,7 @@ extension StringToThemeMode on String {
       case 'system':
         return ThemeMode.system;
       default:
-        return ThemeMode.dark;
+        return ThemeMode.system;
     }
   }
 }

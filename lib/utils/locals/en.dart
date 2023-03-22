@@ -96,6 +96,12 @@ class AuthLocalEn implements AuthLocaleBase {
 
   @override
   String get password => 'Enter password';
+
+  @override
+  String get isLoginDescription => 'Log in';
+
+  @override
+  String get isRegistrationDescription => 'Create';
 }
 
 class TasksLocalEn implements TasksLocaleBase {

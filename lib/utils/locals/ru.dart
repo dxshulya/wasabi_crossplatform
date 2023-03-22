@@ -96,6 +96,12 @@ class AuthLocalRu implements AuthLocaleBase {
 
   @override
   String get password => 'Введите пароль';
+
+  @override
+  String get isLoginDescription => 'Войти';
+
+  @override
+  String get isRegistrationDescription => 'Создать';
 }
 
 class TasksLocalRu implements TasksLocaleBase {

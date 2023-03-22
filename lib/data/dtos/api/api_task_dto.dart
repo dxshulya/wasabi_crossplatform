@@ -23,7 +23,8 @@ class TaskDTO {
   @JsonKey(name: 'answer', defaultValue: '')
   final String answer;
 
-  factory TaskDTO.fromJson(
-      Map<String, dynamic> json) =>
+  factory TaskDTO.fromJson(Map<String, dynamic> json) =>
       _$TaskDTOFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TaskDTOToJson(this);
 }

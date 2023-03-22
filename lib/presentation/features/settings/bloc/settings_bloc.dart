@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wasabi_crossplatform/blocs/locale_bloc/locale_bloc.dart';
 import 'package:wasabi_crossplatform/blocs/locale_bloc/locale_event.dart';
+import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_state.dart';
 import 'package:wasabi_crossplatform/utils/datastore/datastore.dart';
@@ -12,6 +13,7 @@ import 'package:wasabi_crossplatform/utils/theme_mode_ext.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final LocaleBloc _localeBloc;
+  // final LoginBloc _loginBloc;
 
   SettingsBloc(LocaleBloc localeBloc)
       : _localeBloc = localeBloc,
@@ -27,11 +29,12 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UpdateLocaleEvent>(_onUpdateLocale);
     on<LoadSettingsEvent>(_onLoadSettings);
     on<ChangeThemeModeEvent>(_onThemeModeChanged);
+    on<CleatStorageEvent>(_onClearStorage);
   }
 
   void _onLoadName(LoadNameEvent event, Emitter<SettingsState> emit) async {
-    final shapedPreference = await SharedPreferences.getInstance();
-    final String? name = shapedPreference.getString(Keys.userName);
+    final sharedPreference = await SharedPreferences.getInstance();
+    final String? name = sharedPreference.getString(Keys.userName);
     emit(state.copyWith(name: name));
   }
 
@@ -42,8 +45,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   }
 
   void _onLoadEmail(LoadEmailEvent event, Emitter<SettingsState> emit) async {
-    final shapedPreference = await SharedPreferences.getInstance();
-    final String? email = shapedPreference.getString(Keys.userEmail);
+    final sharedPreference = await SharedPreferences.getInstance();
+    final String? email = sharedPreference.getString(Keys.userEmail);
     emit(state.copyWith(email: email));
   }
 
@@ -68,10 +71,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   void _onLoadSettings(
       LoadSettingsEvent event, Emitter<SettingsState> emit) async {
-    final shapedPreference = await SharedPreferences.getInstance();
-    var isRuLocale = shapedPreference.getBool(Keys.userIsRuLocale) ?? false;
+    final sharedPreference = await SharedPreferences.getInstance();
+    var isRuLocale = sharedPreference.getBool(Keys.userIsRuLocale) ?? false;
     var currentThemeMode =
-        shapedPreference.getString(Keys.userThemeMode)?.asThemeMode() ??
+        sharedPreference.getString(Keys.userThemeMode)?.asThemeMode() ??
             ThemeMode.system;
 
     emit(state.copyWith(isRuLocale: isRuLocale, themeMode: currentThemeMode));
@@ -86,5 +89,18 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       Datastore.setUserThemeMode(event.mode.toString());
       emit(state.copyWith(themeMode: event.mode));
     }
+  }
+
+  void _onClearStorage(
+      CleatStorageEvent event, Emitter<SettingsState> emit) async {
+    Datastore.removeEmail();
+    Datastore.removeName();
+    Datastore.removePassword();
+    Datastore.removeToken();
+    // _loginBloc.add();
+    emit(state.copyWith(
+      email: '',
+      name: '',
+    ));
   }
 }

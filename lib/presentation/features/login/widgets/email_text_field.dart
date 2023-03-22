@@ -5,11 +5,14 @@ import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 class EmailTextField extends StatefulWidget {
   const EmailTextField({
     Key? key,
-    required void Function(String text) onEmailFieldTextChanged
-  })  :_onEmailFieldTextChanged = onEmailFieldTextChanged,
+    required void Function(String text) onEmailFieldTextChanged,
+    required String initialText,
+  })  : _onEmailFieldTextChanged = onEmailFieldTextChanged,
+        _initialText = initialText,
         super(key: key);
 
   final void Function(String text) _onEmailFieldTextChanged;
+  final String _initialText;
 
   @override
   State<EmailTextField> createState() => EmailTextFieldState();
@@ -17,6 +20,12 @@ class EmailTextField extends StatefulWidget {
 
 class EmailTextFieldState extends State<EmailTextField> {
   final TextEditingController _textController = TextEditingController();
+
+  @override
+  void initState() {
+    // _textController.text = _textController.text = widget._initialText;
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -30,13 +39,26 @@ class EmailTextFieldState extends State<EmailTextField> {
       controller: _textController,
       maxLines: 1,
       autofocus: false,
+      keyboardType: TextInputType.emailAddress,
+      maxLength: 50,
       style: TextStyle(color: AppColors.lightColorSchemeSeed),
       decoration: InputDecoration(
-        border: const OutlineInputBorder(),
+        isDense: true,
+        // Added this
+        contentPadding: const EdgeInsets.all(16.0),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(width: 1.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.brandGreenColor, width: 2.0),
+        ),
         errorStyle: TextStyle(color: AppColors.brandRedColor),
         labelText: context.locale.auth.email,
+        floatingLabelStyle: TextStyle(color: AppColors.brandGreenColor),
         hintText: context.locale.auth.email,
-        errorBorder: const OutlineInputBorder(),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.brandRedColor, width: 2.0),
+        ),
       ),
       onChanged: widget._onEmailFieldTextChanged,
     );

@@ -61,7 +61,11 @@ abstract class AuthLocaleBase {
 
   String get isLogin;
 
+  String get isLoginDescription;
+
   String get isRegistration;
+
+  String get isRegistrationDescription;
 }
 
 abstract class TasksLocaleBase {

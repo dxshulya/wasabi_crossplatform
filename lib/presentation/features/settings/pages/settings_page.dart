@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wasabi_crossplatform/presentation/features/login/pages/login_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_state.dart';
@@ -16,6 +17,13 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  @override
+  void initState() {
+    context.read<SettingsBloc>().add(LoadEmailEvent());
+    context.read<SettingsBloc>().add(LoadNameEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,22 +142,57 @@ class _SettingsPageState extends State<SettingsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    context.locale.settings.email,
-                    textAlign: TextAlign.start,
+                  Row(
+                    children: [
+                      Text(
+                        context.locale.settings.email,
+                        textAlign: TextAlign.start,
+                      ),
+                      BlocBuilder<SettingsBloc, SettingsState>(
+                          buildWhen: (oldState, newState) =>
+                              oldState.email != newState.email,
+                          builder: (_, state) {
+                            return Text(
+                              state.email,
+                              style: TextStyle(
+                                  color: AppColors.lightColorSchemeSeed,
+                                  fontWeight: FontWeight.bold),
+                            );
+                          }),
+                    ],
                   ),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(
-                    context.locale.settings.name,
-                    textAlign: TextAlign.start,
+                  Row(
+                    children: [
+                      Text(
+                        context.locale.settings.name,
+                        textAlign: TextAlign.start,
+                      ),
+                      BlocBuilder<SettingsBloc, SettingsState>(
+                          buildWhen: (oldState, newState) =>
+                              oldState.name != newState.name,
+                          builder: (_, state) {
+                            return Text(
+                              state.name,
+                              style: TextStyle(
+                                  color: AppColors.lightColorSchemeSeed,
+                                  fontWeight: FontWeight.bold),
+                            );
+                          }),
+                    ],
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.read<SettingsBloc>().add(CleatStorageEvent());
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            LoginPage.navigationPath,
+                            (Route<dynamic> route) => false);
+                      },
                       style: OutlinedButton.styleFrom(
                         elevation: 0,
                         side: BorderSide(

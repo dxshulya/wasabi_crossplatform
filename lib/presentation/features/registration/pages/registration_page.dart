@@ -72,8 +72,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    TasksPage.navigationPath, (Route<dynamic> route) => false);
+                // Navigator.of(context).pushNamedAndRemoveUntil(
+                //     TasksPage.navigationPath, (Route<dynamic> route) => false);
               },
               child: Text(context.locale.intro.regBtnText),
             ),

@@ -8,6 +8,8 @@ abstract class SettingsEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class CleatStorageEvent extends SettingsEvent {}
+
 class LoadNameEvent extends SettingsEvent {}
 
 class ClearNameEvent extends SettingsEvent {}

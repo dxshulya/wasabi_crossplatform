@@ -1,11 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_favourites_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_login_dto.dart';
+import 'package:wasabi_crossplatform/data/dtos/api/api_message_dto.dart';
+import 'package:wasabi_crossplatform/data/dtos/api/api_task_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_tasks_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_user_dto.dart';
 import 'package:wasabi_crossplatform/data/repositories/interceptors/api_error_interceptor.dart';
-import 'dart:developer' as developer;
+import 'package:wasabi_crossplatform/utils/keys.dart';
+
 class ApiService {
   late final Dio _dio = Dio()
     ..interceptors.addAll([
@@ -26,13 +30,12 @@ class ApiService {
 
   Future<TasksDTO> loadTasks({int page = 1}) async {
     String url = '$_baseURL/tasks/createArrayTasks';
+    final sharedPreference = await SharedPreferences.getInstance();
+    final String? token = sharedPreference.getString(Keys.userToken);
     final Response<dynamic> response = await _dio.get<dynamic>(
       url,
       options: Options(
-        headers: {
-          "Authorization":
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhcmFAbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNjc0NjU2NTU2fQ.StrvFnMbfLWVwYHez9mBmGsLGQqCWyuXQcAlYpRE-b0"
-        },
+        headers: {"Authorization": "Bearer $token"},
       ),
       queryParameters: <String, dynamic>{
         'page': page,
@@ -44,13 +47,12 @@ class ApiService {
 
   Future<FavouritesDTO> loadFavourites({int page = 1}) async {
     String url = '$_baseURL/favourites/getAllFavourites';
+    final sharedPreference = await SharedPreferences.getInstance();
+    final String? token = sharedPreference.getString(Keys.userToken);
     final Response<dynamic> response = await _dio.get<dynamic>(
       url,
       options: Options(
-        headers: {
-          "Authorization":
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhcmFAbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNjc0NjU2NTU2fQ.StrvFnMbfLWVwYHez9mBmGsLGQqCWyuXQcAlYpRE-b0"
-        },
+        headers: {"Authorization": "Bearer $token"},
       ),
       queryParameters: <String, dynamic>{
         'page': page,
@@ -67,5 +69,44 @@ class ApiService {
       data: user.toJson(),
     );
     return LoginDTO.fromJson(response.data);
+  }
+
+  Future<LoginDTO> postRegistration({required UserDTO user}) async {
+    String url = '$_baseURL/auth/registration';
+    final Response<dynamic> response = await _dio.post<dynamic>(
+      url,
+      data: user.toJson(),
+    );
+    return LoginDTO.fromJson(response.data);
+  }
+
+  Future<MessageDTO> postFavourite({required TaskDTO task}) async {
+    String url = '$_baseURL/favourites/addedFavourites';
+    final sharedPreference = await SharedPreferences.getInstance();
+    final String? token = sharedPreference.getString(Keys.userToken);
+    final Response<dynamic> response = await _dio.post<dynamic>(
+      url,
+      options: Options(
+        headers: {"Authorization": "Bearer $token"},
+      ),
+      data: task.toJson(),
+    );
+    return MessageDTO.fromJson(response.data);
+  }
+
+  Future<MessageDTO> deleteFavourite({required String id}) async {
+    String url = '$_baseURL/auth/login';
+    final sharedPreference = await SharedPreferences.getInstance();
+    final String? token = sharedPreference.getString(Keys.userToken);
+    final Response<dynamic> response = await _dio.delete<dynamic>(
+      url,
+      options: Options(
+        headers: {"Authorization": "Bearer $token"},
+      ),
+      queryParameters: <String, dynamic>{
+        'id': id,
+      },
+    );
+    return MessageDTO.fromJson(response.data);
   }
 }
