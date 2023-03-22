@@ -84,4 +84,24 @@ abstract class FavouritesLocaleBase {
 
 abstract class SettingsLocaleBase {
   String get title;
+
+  String get email;
+
+  String get name;
+
+  String get switchLanguage;
+
+  String get darkThemeMode;
+
+  String get lightThemeMode;
+
+  String get systemThemeMode;
+
+  String get theme;
+
+  String get language;
+
+  String get user;
+
+  String get logOut;
 }

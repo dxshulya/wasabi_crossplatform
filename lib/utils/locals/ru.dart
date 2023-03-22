@@ -124,4 +124,34 @@ class FavouritesLocalRu implements FavouritesLocaleBase {
 class SettingsLocalRu implements SettingsLocaleBase {
   @override
   String get title => 'Настройки';
+
+  @override
+  String get darkThemeMode => 'Тёмная тема';
+
+  @override
+  String get email => 'Почта: ';
+
+  @override
+  String get lightThemeMode => 'Светлая тема';
+
+  @override
+  String get name => 'Имя: ';
+
+  @override
+  String get switchLanguage => 'Сменить язык';
+
+  @override
+  String get systemThemeMode => 'Системная тема';
+
+  @override
+  String get language => 'Язык';
+
+  @override
+  String get theme => 'Тема';
+
+  @override
+  String get user => 'Пользователь';
+
+  @override
+  String get logOut => 'Выйти из аккаунта';
 }

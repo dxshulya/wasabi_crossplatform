@@ -5,6 +5,7 @@ import 'package:wasabi_crossplatform/presentation/features/registration/pages/re
 import 'package:wasabi_crossplatform/presentation/features/tasks/pages/tasks_page.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 import 'package:wasabi_crossplatform/utils/datastore/datastore.dart';
+// import 'package:wasabi_crossplatform/utils/datastore/datastore.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 import 'package:wasabi_crossplatform/utils/strings.dart';
 
@@ -18,10 +19,13 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  // final datastore = Datastore();
+
   @override
   void didChangeDependencies() async {
     if (await Datastore.isFirstLaunchPresent() == false) {
       Datastore.setUserIsFirstLaunch(false);
+      // datastore.setUserIsFirstLaunch(false);
       Future.delayed(const Duration(seconds: 2)).then((value) => {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 IntroPage.navigationPath, (Route<dynamic> route) => false),

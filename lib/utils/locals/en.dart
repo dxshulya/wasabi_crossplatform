@@ -31,7 +31,7 @@ class LocaleEn implements LocaleBase {
   FavouritesLocaleBase get favourites => FavouritesLocalEn();
 
   @override
-  SettingsLocaleBase get settings => throw SettingsLocalEn();
+  SettingsLocaleBase get settings => SettingsLocalEn();
 }
 
 class AppLocalEn implements AppLocaleBase {
@@ -124,4 +124,34 @@ class FavouritesLocalEn implements FavouritesLocaleBase {
 class SettingsLocalEn implements SettingsLocaleBase {
   @override
   String get title => 'Settings';
+
+  @override
+  String get darkThemeMode => 'Dark Theme Mode';
+
+  @override
+  String get email => 'Email: ';
+
+  @override
+  String get lightThemeMode => 'Light Theme Mode';
+
+  @override
+  String get name => 'Name: ';
+
+  @override
+  String get switchLanguage => 'Switch Language';
+
+  @override
+  String get systemThemeMode => 'System Theme Mode';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get user => 'User';
+
+  @override
+  String get logOut => 'Log Out';
 }
