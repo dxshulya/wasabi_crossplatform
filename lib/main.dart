@@ -6,12 +6,14 @@ import 'package:wasabi_crossplatform/blocs/error_bloc/error_event.dart';
 import 'package:wasabi_crossplatform/blocs/locale_bloc/locale_bloc.dart';
 import 'package:wasabi_crossplatform/blocs/locale_bloc/locale_state.dart';
 import 'package:wasabi_crossplatform/data/repositories/auth/api_login_repository.dart';
+import 'package:wasabi_crossplatform/data/repositories/auth/api_registration_repository.dart';
 import 'package:wasabi_crossplatform/data/repositories/favourites_tasks_repositories.dart';
 import 'package:wasabi_crossplatform/data/repositories/saved/api_saved_repository.dart';
 import 'package:wasabi_crossplatform/data/repositories/tasks/api_tasks_repository.dart';
 import 'package:wasabi_crossplatform/data/services/api/api_service.dart';
 import 'package:wasabi_crossplatform/domain/repositories/abstract_favourites_tasks_repository.dart';
 import 'package:wasabi_crossplatform/domain/repositories/auth/abstract_login_repository.dart';
+import 'package:wasabi_crossplatform/domain/repositories/auth/abstract_registration_repository.dart';
 import 'package:wasabi_crossplatform/domain/repositories/saved/abstract_saved_repository.dart';
 import 'package:wasabi_crossplatform/domain/repositories/tasks/abstract_tasks_repository.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
@@ -20,6 +22,7 @@ import 'package:wasabi_crossplatform/presentation/features/intro/pages/intro_pag
 import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/pages/login_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/not_found/pages/not_found_page.dart';
+import 'package:wasabi_crossplatform/presentation/features/registration/bloc/registration_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/registration/pages/registration_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/pages/saved_page.dart';
@@ -137,7 +140,34 @@ class MyApp extends StatelessWidget {
                   if (settings.name == RegistrationPage.navigationPath) {
                     return MaterialPageRoute(
                       builder: (_) {
-                        return const RegistrationPage();
+                        return BlocProvider<ErrorBloc>(
+                          lazy: false,
+                          create: (context) => ErrorBloc(context: context),
+                          child: RepositoryProvider<
+                              AbstractRegistrationRepository>(
+                            lazy: false,
+                            create: (context) => ApiRegistrationRepository(
+                              apiService: ApiService(
+                                onErrorHandler: (String code, String message) {
+                                  context.read<ErrorBloc>().add(
+                                        ShowDialogEvent(
+                                          title: code,
+                                          message: message,
+                                        ),
+                                      );
+                                },
+                              ),
+                            ),
+                            child: BlocProvider<RegistrationBloc>(
+                              lazy: false,
+                              create: (context) => RegistrationBloc(
+                                repository: context
+                                    .read<AbstractRegistrationRepository>(),
+                              ),
+                              child: const RegistrationPage(),
+                            ),
+                          ),
+                        );
                       },
                     );
                   }

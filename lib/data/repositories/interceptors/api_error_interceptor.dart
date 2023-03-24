@@ -11,7 +11,7 @@ class ErrorInterceptor extends Interceptor {
   Future<void> onError(DioError err, ErrorInterceptorHandler handler) async {
     onErrorHandler(
       err.response?.statusCode?.toString() ?? _unknownStatusName,
-      err.message ?? _unknownStatusName,
+      err.response?.data.toString() ?? _unknownStatusName,
     );
     handler.next(err);
   }

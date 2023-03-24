@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_favourites_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_login_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_message_dto.dart';
+import 'package:wasabi_crossplatform/data/dtos/api/api_registration_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_task_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_tasks_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_user_dto.dart';
@@ -71,13 +72,13 @@ class ApiService {
     return LoginDTO.fromJson(response.data);
   }
 
-  Future<LoginDTO> postRegistration({required UserDTO user}) async {
+  Future<RegistrationDTO> postRegistration({required UserDTO user}) async {
     String url = '$_baseURL/auth/registration';
     final Response<dynamic> response = await _dio.post<dynamic>(
       url,
       data: user.toJson(),
     );
-    return LoginDTO.fromJson(response.data);
+    return RegistrationDTO.fromJson(response.data);
   }
 
   Future<MessageDTO> postFavourite({required TaskDTO task}) async {
