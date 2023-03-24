@@ -13,6 +13,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   })  : _repository = repository,
         super(const TasksState(page: 1)) {
     on<LoadDataEvent>(_onLoadData);
+    on<ChangedFavouriteEvent>(_onChangedFavourite);
   }
 
   FutureOr<void> _onLoadData(
@@ -23,6 +24,15 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
         data: _repository.fetchTasks(
           page: 1,
         ),
+      ),
+    );
+  }
+
+  FutureOr<void> _onChangedFavourite(
+      ChangedFavouriteEvent event, Emitter<TasksState> emit) async {
+    emit(
+      state.copyWith(
+
       ),
     );
   }

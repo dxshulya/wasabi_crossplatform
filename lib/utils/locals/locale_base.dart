@@ -84,6 +84,10 @@ abstract class SavedLocaleBase {
 
 abstract class FavouritesLocaleBase {
   String get title;
+
+  String get local;
+
+  String get remote;
 }
 
 abstract class SettingsLocaleBase {
@@ -108,4 +112,10 @@ abstract class SettingsLocaleBase {
   String get user;
 
   String get logOut;
+
+  String get exitText;
+
+  String get yes;
+
+  String get no;
 }

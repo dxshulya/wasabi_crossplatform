@@ -4,7 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_tasks.dart';
 import 'package:wasabi_crossplatform/presentation/common/empty.dart';
 import 'package:wasabi_crossplatform/presentation/common/error.dart';
+import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
+import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/pages/favourites_page.dart';
+import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_bloc.dart';
+import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/pages/saved_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/pages/settings_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_bloc.dart';
@@ -12,6 +16,7 @@ import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_even
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/mappers/task_domain_to_task_card_model.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/task_card.dart';
+import 'package:wasabi_crossplatform/utils/colors.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
 class TasksPage extends StatefulWidget {
@@ -45,16 +50,28 @@ class _TasksPageState extends State<TasksPage> {
                 SavedPage.navigationPath,
               );
             },
-            icon: Icon(Icons.save_rounded),
+            icon: Badge(
+              backgroundColor: AppColors.brandGreenColor,
+              label: Text('4'),
+              child: Icon(Icons.save_rounded),
+            ),
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                FavouritesPage.navigationPath,
-              );
-            },
-            icon: Icon(Icons.favorite_rounded),
+          BlocBuilder<FavouritesBloc, FavouritesState>(
+            buildWhen: (oldState, newState) => oldState.tasks != newState.tasks,
+            builder: (context, state) => IconButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  FavouritesPage.navigationPath,
+                );
+              },
+              icon: Badge(
+                backgroundColor: AppColors.brandRedColor,
+                label: Text(state.tasks.length.toString()),
+                isLabelVisible: state.tasks.isEmpty ? false : true,
+                child: const Icon(Icons.favorite_rounded),
+              ),
+            ),
           ),
           IconButton(
             onPressed: () {
@@ -63,7 +80,7 @@ class _TasksPageState extends State<TasksPage> {
                 SettingsPage.navigationPath,
               );
             },
-            icon: Icon(Icons.settings_rounded),
+            icon: const Icon(Icons.settings_rounded),
           ),
         ],
       ),

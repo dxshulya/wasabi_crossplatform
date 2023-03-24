@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wasabi_crossplatform/presentation/common/favourites_icon_checked_button.dart';
+import 'package:wasabi_crossplatform/presentation/common/saved_icon_checked_button.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 
-class FavoritesCheckedButton extends StatelessWidget {
-  const FavoritesCheckedButton({
+class SavedCheckedButton extends StatelessWidget {
+  const SavedCheckedButton({
     Key? key,
     required this.initialChecked,
     required this.alignment,
@@ -16,13 +17,13 @@ class FavoritesCheckedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FavouritesIconCheckedButton(
+    return SavedIconCheckedButton(
       onPressed: onPressed,
       initialChecked: initialChecked,
       foregroundIcon: Icons.favorite_outline_rounded,
       backgroundIcon: Icons.favorite_rounded,
       backgroundColorUnchecked: Colors.transparent,
-      backgroundColorChecked: AppColors.brandRedColor,
+      backgroundColorChecked: AppColors.brandGreenColor,
       padding: const EdgeInsets.all(16),
       alignment: alignment,
     );

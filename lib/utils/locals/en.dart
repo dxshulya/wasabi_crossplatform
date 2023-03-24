@@ -125,6 +125,12 @@ class SavedLocalEn implements SavedLocaleBase {
 class FavouritesLocalEn implements FavouritesLocaleBase {
   @override
   String get title => 'Favourites';
+
+  @override
+  String get local => 'Local';
+
+  @override
+  String get remote => 'Remote';
 }
 
 class SettingsLocalEn implements SettingsLocaleBase {
@@ -160,4 +166,13 @@ class SettingsLocalEn implements SettingsLocaleBase {
 
   @override
   String get logOut => 'Log Out';
+
+  @override
+  String get exitText => 'Do you really want to log out?';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get yes => 'Yes';
 }

@@ -29,7 +29,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UpdateLocaleEvent>(_onUpdateLocale);
     on<LoadSettingsEvent>(_onLoadSettings);
     on<ChangeThemeModeEvent>(_onThemeModeChanged);
-    on<CleatStorageEvent>(_onClearStorage);
+    on<ClearStorageEvent>(_onClearStorage);
   }
 
   void _onLoadName(LoadNameEvent event, Emitter<SettingsState> emit) async {
@@ -92,7 +92,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   }
 
   void _onClearStorage(
-      CleatStorageEvent event, Emitter<SettingsState> emit) async {
+      ClearStorageEvent event, Emitter<SettingsState> emit) async {
     Datastore.removeEmail();
     Datastore.removeName();
     Datastore.removePassword();

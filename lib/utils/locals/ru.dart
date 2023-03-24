@@ -125,6 +125,12 @@ class SavedLocalRu implements SavedLocaleBase {
 class FavouritesLocalRu implements FavouritesLocaleBase {
   @override
   String get title => 'Избранное';
+
+  @override
+  String get local => 'Локально';
+
+  @override
+  String get remote => 'Удалённо';
 }
 
 class SettingsLocalRu implements SettingsLocaleBase {
@@ -160,4 +166,13 @@ class SettingsLocalRu implements SettingsLocaleBase {
 
   @override
   String get logOut => 'Выйти из аккаунта';
+
+  @override
+  String get exitText => 'Вы действительно хотите выйти из аккаунта';
+
+  @override
+  String get no => 'Нет';
+
+  @override
+  String get yes => 'Да';
 }

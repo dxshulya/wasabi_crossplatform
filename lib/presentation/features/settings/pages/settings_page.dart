@@ -188,10 +188,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   OutlinedButton(
                       onPressed: () {
-                        context.read<SettingsBloc>().add(CleatStorageEvent());
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            LoginPage.navigationPath,
-                            (Route<dynamic> route) => false);
+                        showAlertDialog(context);
                       },
                       style: OutlinedButton.styleFrom(
                         elevation: 0,
@@ -227,5 +224,37 @@ class _SettingsPageState extends State<SettingsPage> {
     context
         .read<SettingsBloc>()
         .add(ChangeThemeModeEvent(value ?? ThemeMode.system));
+  }
+
+  showAlertDialog(BuildContext context) {
+    Widget cancelButton = TextButton(
+      child: Text(context.locale.settings.no),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(context.locale.settings.yes),
+      onPressed: () {
+        context.read<SettingsBloc>().add(ClearStorageEvent());
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            LoginPage.navigationPath, (Route<dynamic> route) => false);
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text(context.locale.settings.logOut),
+      content: Text(context.locale.settings.exitText),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

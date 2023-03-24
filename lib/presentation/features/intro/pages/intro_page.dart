@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/pages/login_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/registration/pages/registration_page.dart';
+import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_bloc.dart';
+import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_event.dart';
+import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_state.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 import 'package:wasabi_crossplatform/utils/strings.dart';
@@ -30,6 +34,27 @@ class IntroPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: Row(
+                    children: [
+                      BlocBuilder<SettingsBloc, SettingsState>(
+                        builder: (context, state) => Checkbox(
+                          value: state.isRuLocale,
+                          onChanged: (val) {
+                            final isRuLocale = val ?? false;
+                            context
+                                .read<SettingsBloc>()
+                                .add(UpdateLocaleEvent(value: isRuLocale));
+                          },
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(context.locale.settings.switchLanguage),
+                      ),
+                    ],
+                  ),
+                ),
                 Container(
                   alignment: Alignment.center,
                   child: SvgPicture.asset(
@@ -97,6 +122,27 @@ class IntroPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: Row(
+                    children: [
+                      BlocBuilder<SettingsBloc, SettingsState>(
+                        builder: (context, state) => Checkbox(
+                          value: state.isRuLocale,
+                          onChanged: (val) {
+                            final isRuLocale = val ?? false;
+                            context
+                                .read<SettingsBloc>()
+                                .add(UpdateLocaleEvent(value: isRuLocale));
+                          },
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(context.locale.settings.switchLanguage),
+                      ),
+                    ],
+                  ),
+                ),
                 Container(
                   alignment: Alignment.center,
                   child: SvgPicture.asset(
@@ -183,6 +229,27 @@ class IntroPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: Row(
+                    children: [
+                      BlocBuilder<SettingsBloc, SettingsState>(
+                        builder: (context, state) => Checkbox(
+                          value: state.isRuLocale,
+                          onChanged: (val) {
+                            final isRuLocale = val ?? false;
+                            context
+                                .read<SettingsBloc>()
+                                .add(UpdateLocaleEvent(value: isRuLocale));
+                          },
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(context.locale.settings.switchLanguage),
+                      ),
+                    ],
+                  ),
+                ),
                 Container(
                   alignment: Alignment.center,
                   child: SvgPicture.asset(
