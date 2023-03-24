@@ -62,8 +62,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<SettingsBloc>(
             lazy: false,
-            create: (context) =>
-                SettingsBloc(context.read<LocaleBloc>())..init(),
+            create: (context) => SettingsBloc(
+                context.read<LocaleBloc>(), context.read<FavouritesBloc>())
+              ..init(),
           ),
         ],
         child: BlocBuilder<SettingsBloc, SettingsState>(

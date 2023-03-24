@@ -54,6 +54,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
   }
 
+  // void _onLoadName(LoadNameEvent event, Emitter<SettingsState> emit) async {
+  //   final sharedPreference = await SharedPreferences.getInstance();
+  //   final String? name = sharedPreference.getString(Keys.userName);
+  //   emit(state.copyWith(name: name));
+  // }
+
   FutureOr<void> _onPasswordChangedEvent(
     PasswordChangedEvent event,
     Emitter<LoginState> emit,

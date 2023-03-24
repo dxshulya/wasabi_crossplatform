@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wasabi_crossplatform/blocs/locale_bloc/locale_bloc.dart';
 import 'package:wasabi_crossplatform/blocs/locale_bloc/locale_event.dart';
+import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
+import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_state.dart';
@@ -14,9 +16,13 @@ import 'package:wasabi_crossplatform/utils/theme_mode_ext.dart';
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final LocaleBloc _localeBloc;
   // final LoginBloc _loginBloc;
+  final FavouritesBloc _favouritesBloc;
 
-  SettingsBloc(LocaleBloc localeBloc)
+  SettingsBloc(
+      LocaleBloc localeBloc, FavouritesBloc favouritesBloc)
       : _localeBloc = localeBloc,
+        // _loginBloc = loginBloc,
+        _favouritesBloc = favouritesBloc,
         super(const SettingsState(
             email: '',
             name: '',
@@ -98,6 +104,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     Datastore.removePassword();
     Datastore.removeToken();
     // _loginBloc.add();
+    _favouritesBloc.add(ClearFavourites());
     emit(state.copyWith(
       email: '',
       name: '',
