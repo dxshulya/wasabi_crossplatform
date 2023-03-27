@@ -5,6 +5,7 @@ import 'package:wasabi_crossplatform/data/models/base_user.dart';
 import 'package:wasabi_crossplatform/domain/repositories/auth/abstract_login_repository.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_state.dart';
+import 'package:wasabi_crossplatform/utils/colorful_debugger.dart';
 import 'package:wasabi_crossplatform/utils/datastore/datastore.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -25,7 +26,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(
       state.copyWith(
         response: _repository.login(BaseUser(
-            email: state.email, name: state.name, password: state.password)),
+            email: state.email, name: state.name, password: state.password))
       ),
     );
   }
@@ -47,18 +48,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) {
     Datastore.setUserName(event.name);
+    state.response?.then((value) => value.login);
     emit(
       state.copyWith(
         name: event.name,
       ),
     );
   }
-
-  // void _onLoadName(LoadNameEvent event, Emitter<SettingsState> emit) async {
-  //   final sharedPreference = await SharedPreferences.getInstance();
-  //   final String? name = sharedPreference.getString(Keys.userName);
-  //   emit(state.copyWith(name: name));
-  // }
 
   FutureOr<void> _onPasswordChangedEvent(
     PasswordChangedEvent event,

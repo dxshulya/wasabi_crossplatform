@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/widgets/email_text_field.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/widgets/password_text_field.dart';
 import 'package:wasabi_crossplatform/presentation/features/registration/pages/registration_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/pages/tasks_page.dart';
+import 'package:wasabi_crossplatform/utils/colorful_debugger.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 import 'package:wasabi_crossplatform/utils/datastore/datastore.dart';
+import 'package:wasabi_crossplatform/utils/keys.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
 class LoginPage extends StatefulWidget {
@@ -86,20 +89,38 @@ class _LoginPageState extends State<LoginPage> {
             ),
             ElevatedButton(
                 onPressed: () async {
-                  final bloc = context.read<LoginBloc>();
                   context.read<LoginBloc>().add(SendDataEvent());
+                  final bloc = context.read<LoginBloc>();
                   final response = await bloc.state.response;
                   final String? login = response?.login.toString();
                   final String? token = response?.token.toString();
-                  if (token!.isNotEmpty && login!.isNotEmpty) {
+                  final sp = await SharedPreferences.getInstance();
+                  await sp.setString(Keys.userToken, token!);
+                  await sp.setString(Keys.userName, login!);
+                  // Datastore.setUserToken(token!);
+                  // Datastore.setUserName(login!);
+                  if (await Datastore.isTokenPresent()) {
                     Future.delayed(const Duration(seconds: 0)).then((value) => {
-                          Datastore.setUserName(login),
-                          Datastore.setUserToken(token),
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               TasksPage.navigationPath,
                               (Route<dynamic> route) => false),
                         });
                   }
+                  // if (token != null) {
+                  //   Future.delayed(const Duration(seconds: 0)).then((value) => {
+                  //     Navigator.of(context).pushNamedAndRemoveUntil(
+                  //         TasksPage.navigationPath,
+                  //             (Route<dynamic> route) => false),
+                  //   });
+                  // }
+                  prettyPrint(
+                      tag: "Имя Res",
+                      value: sp.getString(Keys.userName),
+                      type: DebugType.error);
+                  prettyPrint(
+                      tag: "Токен Res",
+                      value: sp.getString(Keys.userToken),
+                      type: DebugType.error);
                 },
                 style: ElevatedButton.styleFrom(
                   elevation: 0,

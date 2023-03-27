@@ -9,9 +9,9 @@ abstract class ErrorEvent extends Equatable {
 
 class ShowDialogEvent extends ErrorEvent {
   final String? title;
-  final String? message;
+  final Map<String, dynamic> message;
 
-  const ShowDialogEvent({this.title, this.message});
+  const ShowDialogEvent({this.title, required this.message});
 
   @override
   List<Object> get props => [title ?? 0, message ?? 0];

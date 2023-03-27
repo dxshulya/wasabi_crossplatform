@@ -114,7 +114,8 @@ class MyApp extends StatelessWidget {
                             lazy: false,
                             create: (context) => ApiLoginRepository(
                               apiService: ApiService(
-                                onErrorHandler: (String code, String message) {
+                                onErrorHandler: (String code,
+                                    Map<String, dynamic> message) {
                                   context.read<ErrorBloc>().add(
                                         ShowDialogEvent(
                                           title: code,
@@ -149,7 +150,8 @@ class MyApp extends StatelessWidget {
                             lazy: false,
                             create: (context) => ApiRegistrationRepository(
                               apiService: ApiService(
-                                onErrorHandler: (String code, String message) {
+                                onErrorHandler: (String code,
+                                    Map<String, dynamic> message) {
                                   context.read<ErrorBloc>().add(
                                         ShowDialogEvent(
                                           title: code,
@@ -191,7 +193,8 @@ class MyApp extends StatelessWidget {
                             lazy: false,
                             create: (context) => ApiTasksRepository(
                               apiService: ApiService(
-                                onErrorHandler: (String code, String message) {
+                                onErrorHandler: (String code,
+                                    Map<String, dynamic> message) {
                                   context.read<ErrorBloc>().add(
                                         ShowDialogEvent(
                                           title: code,
@@ -225,7 +228,8 @@ class MyApp extends StatelessWidget {
                             lazy: false,
                             create: (context) => ApiSavedRepository(
                               apiService: ApiService(
-                                onErrorHandler: (String code, String message) {
+                                onErrorHandler: (String code,
+                                    Map<String, dynamic> message) {
                                   context.read<ErrorBloc>().add(
                                         ShowDialogEvent(
                                           title: code,

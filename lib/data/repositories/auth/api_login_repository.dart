@@ -4,6 +4,8 @@ import 'package:wasabi_crossplatform/data/services/api/api_service.dart';
 import 'package:wasabi_crossplatform/domain/models/auth/abstract_login_response.dart';
 import 'package:wasabi_crossplatform/domain/models/auth/abstract_user.dart';
 import 'package:wasabi_crossplatform/domain/repositories/auth/abstract_login_repository.dart';
+import 'package:wasabi_crossplatform/utils/colorful_debugger.dart';
+import 'package:wasabi_crossplatform/utils/datastore/datastore.dart';
 
 class ApiLoginRepository implements AbstractLoginRepository {
   ApiLoginRepository({
@@ -17,6 +19,11 @@ class ApiLoginRepository implements AbstractLoginRepository {
     final response = await _apiService.postLogin(
         user: UserDTO(
             email: user.email, name: user.name ?? '', password: user.password));
+    // final _token = response.token;
+    // await addTokenToSharedPreference(_token!);
+    // Datastore.setUserToken(response.token);
+    // Datastore.setUserName(response.login);
+    // prettyPrint(tag: 'Response', value: response.login, type: DebugType.error);
     return response.toDomain();
   }
 }

@@ -9,6 +9,8 @@ import 'package:wasabi_crossplatform/data/dtos/api/api_task_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_tasks_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_user_dto.dart';
 import 'package:wasabi_crossplatform/data/repositories/interceptors/api_error_interceptor.dart';
+import 'package:wasabi_crossplatform/utils/colorful_debugger.dart';
+import 'package:wasabi_crossplatform/utils/datastore/datastore.dart';
 import 'package:wasabi_crossplatform/utils/keys.dart';
 
 class ApiService {
@@ -22,11 +24,11 @@ class ApiService {
       ErrorInterceptor(_onErrorHandler),
     ]);
 
-  final Function(String, String) _onErrorHandler;
+  final Function(String, Map<String, dynamic>) _onErrorHandler;
 
   static const _baseURL = 'http://10.0.2.2:5000';
 
-  ApiService({required Function(String, String) onErrorHandler})
+  ApiService({required Function(String, Map<String, dynamic>) onErrorHandler})
       : _onErrorHandler = onErrorHandler;
 
   Future<TasksDTO> loadTasks({int page = 1}) async {
@@ -65,10 +67,19 @@ class ApiService {
 
   Future<LoginDTO> postLogin({required UserDTO user}) async {
     String url = '$_baseURL/auth/login';
+    final sharedPreference = await SharedPreferences.getInstance();
     final Response<dynamic> response = await _dio.post<dynamic>(
       url,
       data: user.toJson(),
     );
+    // final userResponse = LoginDTO.fromJson(response.data);
+    // await sharedPreference.setString(Keys.userToken, userResponse.token);
+    // await sharedPreference.setString(Keys.userName, userResponse.login);
+    // final result = LoginDTO.fromJson(response.data);
+    // Datastore.setUserToken(result.token);
+    // Datastore.setUserName(result.login);
+    // prettyPrint(tag: "API_SERVICE", value: sharedPreference.getString(Keys.userToken), type: DebugType.error);
+    // return result;
     return LoginDTO.fromJson(response.data);
   }
 
