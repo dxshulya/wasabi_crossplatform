@@ -95,11 +95,12 @@ class _LoginPageState extends State<LoginPage> {
                   final String? login = response?.login.toString();
                   final String? token = response?.token.toString();
                   final sp = await SharedPreferences.getInstance();
-                  await sp.setString(Keys.userToken, token!);
-                  await sp.setString(Keys.userName, login!);
+                  final tokenSP = sp.getString(Keys.userToken);
+                  // await sp.setString(Keys.userToken, token!);
+                  // await sp.setString(Keys.userName, login!);
                   // Datastore.setUserToken(token!);
                   // Datastore.setUserName(login!);
-                  if (await Datastore.isTokenPresent()) {
+                  if (tokenSP != null) {
                     Future.delayed(const Duration(seconds: 0)).then((value) => {
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               TasksPage.navigationPath,

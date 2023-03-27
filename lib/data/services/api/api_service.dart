@@ -24,11 +24,11 @@ class ApiService {
       ErrorInterceptor(_onErrorHandler),
     ]);
 
-  final Function(String, Map<String, dynamic>) _onErrorHandler;
+  final Function(String, String, String) _onErrorHandler;
 
   static const _baseURL = 'http://10.0.2.2:5000';
 
-  ApiService({required Function(String, Map<String, dynamic>) onErrorHandler})
+  ApiService({required Function(String, String, String) onErrorHandler})
       : _onErrorHandler = onErrorHandler;
 
   Future<TasksDTO> loadTasks({int page = 1}) async {
@@ -75,12 +75,17 @@ class ApiService {
     // final userResponse = LoginDTO.fromJson(response.data);
     // await sharedPreference.setString(Keys.userToken, userResponse.token);
     // await sharedPreference.setString(Keys.userName, userResponse.login);
-    // final result = LoginDTO.fromJson(response.data);
+    final result = LoginDTO.fromJson(response.data);
     // Datastore.setUserToken(result.token);
     // Datastore.setUserName(result.login);
-    // prettyPrint(tag: "API_SERVICE", value: sharedPreference.getString(Keys.userToken), type: DebugType.error);
-    // return result;
-    return LoginDTO.fromJson(response.data);
+    prettyPrint(tag: "API_SERVICE_login", value: result.login, type: DebugType.error);
+    prettyPrint(tag: "API_SERVICE_token", value: result.token, type: DebugType.error);
+    Datastore.setUserToken(result.token);
+    Datastore.setUserName(result.login);
+    prettyPrint(tag: "API_SERVICE_token_sp", value: result.login, type: DebugType.error);
+    prettyPrint(tag: "API_SERVICE_login_sp", value: result.token, type: DebugType.error);
+    return result;
+    // return LoginDTO.fromJson(response.data);
   }
 
   Future<RegistrationDTO> postRegistration({required UserDTO user}) async {

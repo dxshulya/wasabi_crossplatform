@@ -16,7 +16,8 @@ class ErrorBloc extends Bloc<ErrorEvent, ErrorState> {
   void _onShowDialog(ShowDialogEvent event, Emitter<ErrorState> emit) {
     showErrorDialog(
       statusCode: '${event.title}',
-      error: '${event.message}',
+      message: '${event.message}',
+      error: '${event.error}',
       context: _context,
     );
   }

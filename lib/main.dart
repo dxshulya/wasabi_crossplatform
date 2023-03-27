@@ -115,13 +115,14 @@ class MyApp extends StatelessWidget {
                             create: (context) => ApiLoginRepository(
                               apiService: ApiService(
                                 onErrorHandler: (String code,
-                                    Map<String, dynamic> message) {
+                                    String message, String error) {
                                   context.read<ErrorBloc>().add(
-                                        ShowDialogEvent(
-                                          title: code,
-                                          message: message,
-                                        ),
-                                      );
+                                    ShowDialogEvent(
+                                      title: code,
+                                      message: message,
+                                      error: error,
+                                    ),
+                                  );
                                 },
                               ),
                             ),
@@ -151,11 +152,12 @@ class MyApp extends StatelessWidget {
                             create: (context) => ApiRegistrationRepository(
                               apiService: ApiService(
                                 onErrorHandler: (String code,
-                                    Map<String, dynamic> message) {
+                                    String message, String error) {
                                   context.read<ErrorBloc>().add(
                                         ShowDialogEvent(
                                           title: code,
                                           message: message,
+                                          error: error,
                                         ),
                                       );
                                 },
@@ -194,13 +196,14 @@ class MyApp extends StatelessWidget {
                             create: (context) => ApiTasksRepository(
                               apiService: ApiService(
                                 onErrorHandler: (String code,
-                                    Map<String, dynamic> message) {
+                                    String message, String error) {
                                   context.read<ErrorBloc>().add(
-                                        ShowDialogEvent(
-                                          title: code,
-                                          message: message,
-                                        ),
-                                      );
+                                    ShowDialogEvent(
+                                      title: code,
+                                      message: message,
+                                      error: error,
+                                    ),
+                                  );
                                 },
                               ),
                             ),
@@ -229,13 +232,14 @@ class MyApp extends StatelessWidget {
                             create: (context) => ApiSavedRepository(
                               apiService: ApiService(
                                 onErrorHandler: (String code,
-                                    Map<String, dynamic> message) {
+                                    String message, String error) {
                                   context.read<ErrorBloc>().add(
-                                        ShowDialogEvent(
-                                          title: code,
-                                          message: message,
-                                        ),
-                                      );
+                                    ShowDialogEvent(
+                                      title: code,
+                                      message: message,
+                                      error: error,
+                                    ),
+                                  );
                                 },
                               ),
                             ),

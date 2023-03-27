@@ -6,7 +6,7 @@ class ErrorInterceptor extends Interceptor {
 
   static const String _unknownStatusName = 'unknown';
 
-  final Function(String, Map<String, dynamic>) onErrorHandler;
+  final Function(String, String, String) onErrorHandler;
 
   @override
   Future<void> onError(DioError err, ErrorInterceptorHandler handler) async {
@@ -16,8 +16,10 @@ class ErrorInterceptor extends Interceptor {
     // err.error = MessageDTO.fromJson(errorBody);
     onErrorHandler(
       errorBody['statusCode'].toString(),
+      errorBody['message'].toString(),
+      errorBody['error'].toString(),
       // err.response?.statusCode?.toString() ?? _unknownStatusName,
-      errorBody,
+      // errorBody,
       // err.response?.data.toString() ?? _unknownStatusName,
     );
     handler.next(err);

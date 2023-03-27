@@ -2,21 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 
-void showErrorDialog(
-    {required BuildContext context,
-    required String error,
-    required String statusCode}) {
+void showErrorDialog({
+  required BuildContext context,
+  required String error,
+  required String statusCode,
+  required String message,
+}) {
   SchedulerBinding.instance.addPostFrameCallback((_) => showDialog(
         context: context,
-        builder: (_) => ErrorDialog(error: error, statusCode: statusCode),
+        builder: (_) => ErrorDialog(
+          error: error,
+          statusCode: statusCode,
+          message: message,
+        ),
       ));
 }
 
 class ErrorDialog extends StatelessWidget {
-  final String? error;
+  final String? message;
   final String? statusCode;
+  final String? error;
 
-  const ErrorDialog({required this.error, required this.statusCode, Key? key})
+  const ErrorDialog(
+      {required this.error,
+      required this.statusCode,
+      required this.message,
+      Key? key})
       : super(key: key);
 
   @override
@@ -65,7 +76,7 @@ class ErrorDialog extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  error.toString(),
+                  message.toString(),
                   style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.normal,
