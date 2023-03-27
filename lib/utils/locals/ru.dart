@@ -32,6 +32,9 @@ class LocaleRu implements LocaleBase {
 
   @override
   SettingsLocaleBase get settings => SettingsLocalRu();
+
+  @override
+  ValidationLocaleBase get validation => ValidationLocalRu();
 }
 
 class AppLocalRu implements AppLocaleBase {
@@ -92,7 +95,7 @@ class AuthLocalRu implements AuthLocaleBase {
   String get isRegistration => 'Нет аккаунта?';
 
   @override
-  String get name => 'Введите имя';
+  String get name => 'Как вас зовут?';
 
   @override
   String get password => 'Введите пароль';
@@ -175,4 +178,18 @@ class SettingsLocalRu implements SettingsLocaleBase {
 
   @override
   String get yes => 'Да';
+}
+
+class ValidationLocalRu implements ValidationLocaleBase {
+  @override
+  String get emailPattern => 'Некорректный адрес!';
+
+  @override
+  String get emptyPattern => 'Пустое поле!';
+
+  @override
+  String get maxSymbolsPattern => 'Максимум 50 символов!';
+
+  @override
+  String get minSymbolsPattern => 'Минимум 7 символов!';
 }

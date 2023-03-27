@@ -12,7 +12,9 @@ import 'package:wasabi_crossplatform/utils/datastore/datastore.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
 class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
+
+  RegistrationPage({Key? key}) : super(key: key);
 
   static const String navigationPath = '/registration';
 
@@ -40,16 +42,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
             const SizedBox(
               height: 48,
             ),
-            EmailTextField(onEmailFieldTextChanged: _onEmailFieldTextChanged),
-            const SizedBox(
-              height: 24,
+            Form(
+              key: widget._formKey,
+              child: Column(
+                children: [
+                  NameTextField(
+                      onNameFieldTextChanged: _onNameFieldTextChanged),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  EmailTextField(
+                      onEmailFieldTextChanged: _onEmailFieldTextChanged),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  PasswordTextField(
+                      onPasswordFieldTextChanged: _onPasswordFieldTextChanged),
+                ],
+              ),
             ),
-            NameTextField(onNameFieldTextChanged: _onNameFieldTextChanged),
-            const SizedBox(
-              height: 24,
-            ),
-            PasswordTextField(
-                onPasswordFieldTextChanged: _onPasswordFieldTextChanged),
             const SizedBox(
               height: 32,
             ),
@@ -86,19 +97,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ),
             ElevatedButton(
                 onPressed: () async {
-                  final bloc = context.read<RegistrationBloc>();
-                  context.read<RegistrationBloc>().add(SendDataEvent());
-                  final response = await bloc.state.response;
-                  final String? login = response?.login.toString();
-                  final String? token = response?.token.toString();
-                  if (token!.isNotEmpty && login!.isNotEmpty) {
-                    Future.delayed(const Duration(seconds: 0)).then((value) => {
-                          // Datastore.setUserName(login),
-                          Datastore.setUserToken(token),
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              TasksPage.navigationPath,
-                              (Route<dynamic> route) => false),
-                        });
+                  if (widget._formKey.currentState!.validate()) {
+                    widget._formKey.currentState!.save();
+                    context.read<RegistrationBloc>().add(SendDataEvent());
+                    if (await Datastore.isTokenPresent()) {
+                      Future.delayed(const Duration(seconds: 0))
+                          .then((value) => {
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    TasksPage.navigationPath,
+                                    (Route<dynamic> route) => false),
+                              });
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(

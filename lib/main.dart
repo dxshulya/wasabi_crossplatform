@@ -132,7 +132,7 @@ class MyApp extends StatelessWidget {
                                 repository:
                                     context.read<AbstractLoginRepository>(),
                               ),
-                              child: const LoginPage(),
+                              child: LoginPage(),
                             ),
                           ),
                         );
@@ -169,7 +169,7 @@ class MyApp extends StatelessWidget {
                                 repository: context
                                     .read<AbstractRegistrationRepository>(),
                               ),
-                              child: const RegistrationPage(),
+                              child: RegistrationPage(),
                             ),
                           ),
                         );

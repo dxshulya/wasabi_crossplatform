@@ -14,7 +14,9 @@ import 'package:wasabi_crossplatform/utils/keys.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
+
+  LoginPage({Key? key}) : super(key: key);
 
   static const String navigationPath = '/login';
 
@@ -42,17 +44,20 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 48,
             ),
-            EmailTextField(
-                onEmailFieldTextChanged: _onEmailFieldTextChanged,
-                initialText: ''),
-            const SizedBox(
-              height: 24,
+            Form(
+              key: widget._formKey,
+              child: Column(
+                children: [
+                  EmailTextField(
+                      onEmailFieldTextChanged: _onEmailFieldTextChanged),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  PasswordTextField(
+                      onPasswordFieldTextChanged: _onPasswordFieldTextChanged),
+                ],
+              ),
             ),
-            PasswordTextField(
-                onPasswordFieldTextChanged: _onPasswordFieldTextChanged,
-                isShowPassword: true,
-                onIsShowPressed: _onIsShowPressed,
-                initialText: ''),
             const SizedBox(
               height: 32,
             ),
@@ -89,24 +94,28 @@ class _LoginPageState extends State<LoginPage> {
             ),
             ElevatedButton(
                 onPressed: () async {
-                  context.read<LoginBloc>().add(SendDataEvent());
-                  final bloc = context.read<LoginBloc>();
-                  final response = await bloc.state.response;
-                  final String? login = response?.login.toString();
-                  final String? token = response?.token.toString();
+                  if (widget._formKey.currentState!.validate()) {
+                    widget._formKey.currentState!.save();
+                    context.read<LoginBloc>().add(SendDataEvent());
+                    if (await Datastore.isTokenPresent()) {
+                      Future.delayed(const Duration(seconds: 0))
+                          .then((value) => {
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    TasksPage.navigationPath,
+                                    (Route<dynamic> route) => false),
+                              });
+                    }
+                  }
+                  // final bloc = context.read<LoginBloc>();
+                  // final response = await bloc.state.response;
+                  // final String? login = response?.login.toString();
+                  // final String? token = response?.token.toString();
                   final sp = await SharedPreferences.getInstance();
-                  final tokenSP = sp.getString(Keys.userToken);
+                  // final tokenSP = sp.getString(Keys.userToken);
                   // await sp.setString(Keys.userToken, token!);
                   // await sp.setString(Keys.userName, login!);
                   // Datastore.setUserToken(token!);
                   // Datastore.setUserName(login!);
-                  if (tokenSP != null) {
-                    Future.delayed(const Duration(seconds: 0)).then((value) => {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              TasksPage.navigationPath,
-                              (Route<dynamic> route) => false),
-                        });
-                  }
                   // if (token != null) {
                   //   Future.delayed(const Duration(seconds: 0)).then((value) => {
                   //     Navigator.of(context).pushNamedAndRemoveUntil(

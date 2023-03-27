@@ -18,6 +18,8 @@ abstract class LocaleBase {
   FavouritesLocaleBase get favourites;
 
   SettingsLocaleBase get settings;
+
+  ValidationLocaleBase get validation;
 }
 
 abstract class AppLocaleBase {
@@ -118,4 +120,14 @@ abstract class SettingsLocaleBase {
   String get yes;
 
   String get no;
+}
+
+abstract class ValidationLocaleBase {
+  String get emailPattern;
+
+  String get emptyPattern;
+
+  String get minSymbolsPattern;
+
+  String get maxSymbolsPattern;
 }

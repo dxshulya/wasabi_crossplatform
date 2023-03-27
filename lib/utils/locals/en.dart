@@ -32,6 +32,9 @@ class LocaleEn implements LocaleBase {
 
   @override
   SettingsLocaleBase get settings => SettingsLocalEn();
+
+  @override
+  ValidationLocaleBase get validation => ValidationLocalEn();
 }
 
 class AppLocalEn implements AppLocaleBase {
@@ -175,4 +178,18 @@ class SettingsLocalEn implements SettingsLocaleBase {
 
   @override
   String get yes => 'Yes';
+}
+
+class ValidationLocalEn implements ValidationLocaleBase {
+  @override
+  String get emailPattern => 'Invalid address!';
+
+  @override
+  String get emptyPattern => 'An empty field!';
+
+  @override
+  String get maxSymbolsPattern => 'Maximum of 50 characters!';
+
+  @override
+  String get minSymbolsPattern => 'Minimum of 7 characters!';
 }

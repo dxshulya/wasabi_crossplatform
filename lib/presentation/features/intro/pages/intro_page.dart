@@ -122,27 +122,6 @@ class IntroPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Row(
-                    children: [
-                      BlocBuilder<SettingsBloc, SettingsState>(
-                        builder: (context, state) => Checkbox(
-                          value: state.isRuLocale,
-                          onChanged: (val) {
-                            final isRuLocale = val ?? false;
-                            context
-                                .read<SettingsBloc>()
-                                .add(UpdateLocaleEvent(value: isRuLocale));
-                          },
-                        ),
-                      ),
-                      Flexible(
-                        child: Text(context.locale.settings.switchLanguage),
-                      ),
-                    ],
-                  ),
-                ),
                 Container(
                   alignment: Alignment.center,
                   child: SvgPicture.asset(
@@ -229,27 +208,6 @@ class IntroPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Row(
-                    children: [
-                      BlocBuilder<SettingsBloc, SettingsState>(
-                        builder: (context, state) => Checkbox(
-                          value: state.isRuLocale,
-                          onChanged: (val) {
-                            final isRuLocale = val ?? false;
-                            context
-                                .read<SettingsBloc>()
-                                .add(UpdateLocaleEvent(value: isRuLocale));
-                          },
-                        ),
-                      ),
-                      Flexible(
-                        child: Text(context.locale.settings.switchLanguage),
-                      ),
-                    ],
-                  ),
-                ),
                 Container(
                   alignment: Alignment.center,
                   child: SvgPicture.asset(
