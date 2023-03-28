@@ -2,16 +2,16 @@ import 'package:wasabi_crossplatform/domain/models/auth/abstract_message.dart';
 
 class BaseMessage implements AbstractMessage {
   BaseMessage({
-    required String statusCode,
+    required int statusCode,
     required String message,
   })  : _statusCode = statusCode,
         _message = message;
 
-  BaseMessage.empty() : this(statusCode: '', message: '');
+  BaseMessage.empty() : this(statusCode: 0, message: '');
 
   @override
-  String get statusCode => _statusCode;
-  final String _statusCode;
+  int get statusCode => _statusCode;
+  final int _statusCode;
 
   @override
   String get message => _message;

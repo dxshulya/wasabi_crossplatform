@@ -176,6 +176,4 @@ class _LoginPageState extends State<LoginPage> {
     var passwordChangedEvent = PasswordChangedEvent(password: text);
     context.read<LoginBloc>().add(passwordChangedEvent);
   }
-
-  void _onIsShowPressed(bool isShow) {}
 }

@@ -4,6 +4,7 @@ import 'package:wasabi_crossplatform/data/services/api/api_service.dart';
 import 'package:wasabi_crossplatform/domain/models/auth/abstract_message.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_task.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_tasks.dart';
+import 'package:wasabi_crossplatform/domain/models/tasks/abstract_total_count.dart';
 import 'package:wasabi_crossplatform/domain/repositories/tasks/abstract_tasks_repository.dart';
 
 class ApiTasksRepository implements AbstractTasksRepository {
@@ -30,6 +31,12 @@ class ApiTasksRepository implements AbstractTasksRepository {
     final response = await _apiService.postFavourite(
         task: TaskDTO(
             id: task.id, formula: task.formula, task: task.task, answer: task.answer));
+    return response.toDomain();
+  }
+
+  @override
+  Future<AbstractTotalCount> getTotalCount() async {
+    final response = await _apiService.loadTotalCount();
     return response.toDomain();
   }
 }

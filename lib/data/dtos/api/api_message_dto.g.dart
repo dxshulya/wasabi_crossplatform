@@ -7,7 +7,7 @@ part of 'api_message_dto.dart';
 // **************************************************************************
 
 MessageDTO _$MessageDTOFromJson(Map<String, dynamic> json) => MessageDTO(
-      statusCode: json['statusCode'] as String? ?? '',
+      statusCode: json['statusCode'] as int? ?? 0,
       message: json['message'] as String? ?? '',
     );
 

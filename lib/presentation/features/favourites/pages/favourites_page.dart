@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/common/empty.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_state.dart';
-import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/mappers/task_domain_to_task_card_model.dart';
-import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/task_card.dart';
+import 'package:wasabi_crossplatform/presentation/features/favourites/widgets/favourite_card.dart';
+import 'package:wasabi_crossplatform/presentation/features/favourites/widgets/mappers/task_domain_to_favourite_card_model.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
 class FavouritesPage extends StatefulWidget {
@@ -41,9 +41,9 @@ class _FavouritesPageState extends State<FavouritesPage> {
                   return ListView.builder(
                     controller: _scrollController,
                     itemBuilder: (BuildContext context, int index) {
-                      return TaskCard(
+                      return FavouriteCard(
                         index: index + 1,
-                        model: state.tasks[index].toTaskCardModel(),
+                        model: state.tasks[index].toFavouriteCardModel(),
                       );
                     },
                     itemCount: state.tasks.length,

@@ -9,8 +9,8 @@ class MessageDTO {
     required this.message,
   });
 
-  @JsonKey(name: 'statusCode', defaultValue: '')
-  final String statusCode;
+  @JsonKey(name: 'statusCode', defaultValue: 0)
+  final int statusCode;
 
   @JsonKey(name: 'message', defaultValue: '')
   final String message;

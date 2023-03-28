@@ -10,8 +10,16 @@ abstract class TasksEvent extends Equatable {
 
 class LoadDataEvent extends TasksEvent {}
 
-class ChangedFavouriteEvent extends TasksEvent {
+class TotalCountEvent extends TasksEvent {}
+
+class ChangedLikedEvent extends TasksEvent {
   final AbstractTask model;
 
-  const ChangedFavouriteEvent({required this.model});
+  const ChangedLikedEvent({required this.model});
+}
+
+class ChangedDislikeEvent extends TasksEvent {
+  final String id;
+
+  const ChangedDislikeEvent({required this.id});
 }

@@ -1,4 +1,4 @@
 abstract class AbstractMessage {
-  String get statusCode;
+  int get statusCode;
   String get message;
 }

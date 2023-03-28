@@ -7,28 +7,21 @@ import 'package:wasabi_crossplatform/presentation/common/saved_checked_button.da
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_state.dart';
-import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_bloc.dart';
-import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_event.dart';
-import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_state.dart';
-import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/models/task_card_model.dart';
+import 'package:wasabi_crossplatform/presentation/features/favourites/widgets/models/favourite_card_model.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 
-class TaskCard extends StatelessWidget {
-  const TaskCard(
-      {required TaskCardModel model,
-      required int index,
-      Key? key})
+class FavouriteCard extends StatelessWidget {
+  const FavouriteCard(
+      {required FavouriteCardModel model, required int index, Key? key})
       : _model = model,
         _index = index,
         super(key: key);
 
-  final TaskCardModel _model;
+  final FavouriteCardModel _model;
   final int _index;
 
   @override
   Widget build(BuildContext context) {
-    bool _isSaved = false;
-
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -66,33 +59,6 @@ class TaskCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 4),
-                  child: BlocBuilder<TasksBloc, TasksState>(
-                    builder: (context, state) => SavedCheckedButton(
-                      alignment: Alignment.centerRight,
-                      initialChecked: _isSaved,
-                      onPressed: () {
-                        if (_isSaved == false) {
-                          context.read<TasksBloc>().add(
-                                ChangedLikedEvent(
-                                  model: _model.toDomain(),
-                                ),
-                              );
-                        } else {
-                          context.read<TasksBloc>().add(
-                                ChangedDislikeEvent(
-                                  id: _model.id,
-                                ),
-                              );
-                        }
-                        _isSaved = !_isSaved;
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
                   padding: const EdgeInsets.only(left: 4),
                   child: BlocBuilder<FavouritesBloc, FavouritesState>(
                     builder: (context, state) => FavoritesCheckedButton(
@@ -102,10 +68,10 @@ class TaskCard extends StatelessWidget {
                           .checkForFavouriteById(_model.id),
                       onPressed: () {
                         context.read<FavouritesBloc>().add(
-                              ChangedFavourite(
-                                model: _model.toDomain(),
-                              ),
-                            );
+                          ChangedFavourite(
+                            model: _model.toDomain(),
+                          ),
+                        );
                       },
                     ),
                   ),

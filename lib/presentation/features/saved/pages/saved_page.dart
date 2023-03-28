@@ -6,9 +6,10 @@ import 'package:wasabi_crossplatform/presentation/common/error.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_state.dart';
+import 'package:wasabi_crossplatform/presentation/features/saved/widgets/mappers/task_domain_to_saved_card_model.dart';
+import 'package:wasabi_crossplatform/presentation/features/saved/widgets/saved_card.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/pages/settings_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/mappers/task_domain_to_task_card_model.dart';
-import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/task_card.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
 class SavedPage extends StatefulWidget {
@@ -42,7 +43,7 @@ class _SavedPageState extends State<SavedPage> {
                 SettingsPage.navigationPath,
               );
             },
-            icon: Icon(Icons.settings_rounded),
+            icon: const Icon(Icons.settings_rounded),
           ),
         ],
       ),
@@ -68,10 +69,10 @@ class _SavedPageState extends State<SavedPage> {
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       final model = data.data?.saves[index]
-                                          .toTaskCardModel();
+                                          .toSavedCardModel();
 
                                       if (model != null) {
-                                        return TaskCard(
+                                        return SavedCard(
                                           index: index + 1,
                                           model: model,
                                         );

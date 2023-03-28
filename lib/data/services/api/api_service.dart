@@ -7,6 +7,7 @@ import 'package:wasabi_crossplatform/data/dtos/api/api_message_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_registration_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_task_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_tasks_dto.dart';
+import 'package:wasabi_crossplatform/data/dtos/api/api_total_count_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_user_dto.dart';
 import 'package:wasabi_crossplatform/data/repositories/interceptors/api_error_interceptor.dart';
 import 'package:wasabi_crossplatform/utils/colorful_debugger.dart';
@@ -46,6 +47,19 @@ class ApiService {
       },
     );
     return TasksDTO.fromJson(response.data);
+  }
+
+  Future<TotalCountDTO> loadTotalCount() async {
+    String url = '$_baseURL/favourites/getTotalCountFavourites';
+    final sharedPreference = await SharedPreferences.getInstance();
+    final String? token = sharedPreference.getString(Keys.userToken);
+    final Response<dynamic> response = await _dio.get<dynamic>(
+      url,
+      options: Options(
+        headers: {"Authorization": "Bearer $token"},
+      ),
+    );
+    return TotalCountDTO.fromJson(response.data);
   }
 
   Future<FavouritesDTO> loadFavourites({int page = 1}) async {
@@ -112,7 +126,7 @@ class ApiService {
   }
 
   Future<MessageDTO> deleteFavourite({required String id}) async {
-    String url = '$_baseURL/auth/login';
+    String url = '$_baseURL/favourites/deleteFavourites';
     final sharedPreference = await SharedPreferences.getInstance();
     final String? token = sharedPreference.getString(Keys.userToken);
     final Response<dynamic> response = await _dio.delete<dynamic>(

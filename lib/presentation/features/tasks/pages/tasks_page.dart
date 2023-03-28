@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wasabi_crossplatform/data/mappers/db/db_data_mapper.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_tasks.dart';
+import 'package:wasabi_crossplatform/domain/models/tasks/abstract_total_count.dart';
 import 'package:wasabi_crossplatform/presentation/common/empty.dart';
 import 'package:wasabi_crossplatform/presentation/common/error.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/pages/favourites_page.dart';
-import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_bloc.dart';
-import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/pages/saved_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/pages/settings_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_state.dart';
-import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/mappers/task_domain_to_task_card_model.dart';
+import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/models/task_card_model.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/task_card.dart';
+import 'package:wasabi_crossplatform/utils/colorful_debugger.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
@@ -31,9 +32,12 @@ class TasksPage extends StatefulWidget {
 class _TasksPageState extends State<TasksPage> {
   ScrollController? _scrollController;
 
+  bool _isSaved = false;
+
   @override
   void didChangeDependencies() {
     context.read<TasksBloc>().add(LoadDataEvent());
+    context.read<TasksBloc>().add(TotalCountEvent());
     super.didChangeDependencies();
   }
 
@@ -43,17 +47,29 @@ class _TasksPageState extends State<TasksPage> {
       appBar: AppBar(
         title: Text(context.locale.tasks.title),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                SavedPage.navigationPath,
-              );
-            },
-            icon: Badge(
-              backgroundColor: AppColors.brandGreenColor,
-              label: Text('4'),
-              child: Icon(Icons.save_rounded),
+          BlocBuilder<TasksBloc, TasksState>(
+            buildWhen: (oldState, newState) =>
+                oldState.totalCount != newState.totalCount,
+            builder: (context, state) => IconButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  SavedPage.navigationPath,
+                );
+              },
+              icon: FutureBuilder<AbstractTotalCount>(
+                future: state.totalCount,
+                builder: (BuildContext context,
+                    AsyncSnapshot<AbstractTotalCount?> data) {
+                  return Badge(
+                    backgroundColor: AppColors.brandGreenColor,
+                    label: Text(data.data?.totalCount.toString() ?? '0'),
+                    isLabelVisible:
+                        (data.data?.totalCount ?? -1) < 0 ? false : true,
+                    child: const Icon(Icons.save_rounded),
+                  );
+                },
+              ),
             ),
           ),
           BlocBuilder<FavouritesBloc, FavouritesState>(
@@ -106,6 +122,8 @@ class _TasksPageState extends State<TasksPage> {
                                       (BuildContext context, int index) {
                                     final model = data.data?.tasks[index]
                                         .toTaskCardModel();
+
+                                    bool isSaved = false;
 
                                     if (model != null) {
                                       return TaskCard(
