@@ -82,7 +82,7 @@ class TaskCard extends StatelessWidget {
               // ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 4),
+                  padding: const EdgeInsets.only(right: 4),
                   child: SavedCheckedButton(
                     alignment: Alignment.centerRight,
                     initialChecked: false,
