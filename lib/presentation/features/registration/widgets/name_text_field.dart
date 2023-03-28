@@ -95,9 +95,6 @@ class NameTextFieldState extends State<NameTextField> {
         if (value!.isEmpty) {
           return context.locale.validation.emptyPattern;
         }
-        if (value.length < 7) {
-          return context.locale.validation.minSymbolsPattern;
-        }
         if (value.length > 50) {
           return context.locale.validation.maxSymbolsPattern;
         }
