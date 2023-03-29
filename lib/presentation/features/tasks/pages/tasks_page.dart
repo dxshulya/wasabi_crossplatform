@@ -34,7 +34,7 @@ class _TasksPageState extends State<TasksPage> {
   @override
   void didChangeDependencies() {
     context.read<TasksBloc>().add(LoadDataEvent());
-    context.read<TasksBloc>().add(TotalCountEvent());
+    // context.read<TasksBloc>().add(TotalCountStreamEvent());
     super.didChangeDependencies();
   }
 
@@ -47,8 +47,6 @@ class _TasksPageState extends State<TasksPage> {
         title: Text(context.locale.tasks.title),
         actions: [
           BlocBuilder<TasksBloc, TasksState>(
-            buildWhen: (oldState, newState) =>
-                oldState.totalCount != newState.totalCount,
             builder: (context, state) => IconButton(
               onPressed: () {
                 Navigator.pushNamed(
@@ -69,19 +67,6 @@ class _TasksPageState extends State<TasksPage> {
                   );
                 },
               ),
-              // icon: FutureBuilder<AbstractTotalCount>(
-              //   future: state.totalCount,
-              //   builder: (BuildContext context,
-              //       AsyncSnapshot<AbstractTotalCount?> data) {
-              //     return Badge(
-              //       backgroundColor: AppColors.brandGreenColor,
-              //       label: Text(data.data?.totalCount.toString() ?? '0'),
-              //       isLabelVisible:
-              //           (data.data?.totalCount ?? -1) < 0 ? false : true,
-              //       child: const Icon(Icons.save_rounded),
-              //     );
-              //   },
-              // ),
             ),
           ),
           BlocBuilder<FavouritesBloc, FavouritesState>(

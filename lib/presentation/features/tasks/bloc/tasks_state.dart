@@ -9,13 +9,15 @@ class TasksState extends Equatable {
   final Future<AbstractTotalCount>? totalCount;
   final Stream<AbstractTotalCount>? totalCountStream;
   final int? page;
+  final int? count;
 
   const TasksState(
       {this.data,
       this.page,
       this.likeData,
       this.totalCount,
-      this.totalCountStream});
+      this.totalCountStream,
+      this.count});
 
   TasksState copyWith({
     Future<AbstractTasks>? data,
@@ -23,13 +25,15 @@ class TasksState extends Equatable {
     Future<AbstractTotalCount>? totalCount,
     Stream<AbstractTotalCount>? totalCountStream,
     int? page,
+    int? count,
   }) =>
       TasksState(
           data: data ?? this.data,
           page: page ?? this.page,
           likeData: likeData ?? this.likeData,
           totalCount: totalCount ?? this.totalCount,
-          totalCountStream: totalCountStream ?? this.totalCountStream);
+          totalCountStream: totalCountStream ?? this.totalCountStream,
+          count: count ?? this.count);
 
   @override
   List<Object> get props => [
@@ -37,6 +41,7 @@ class TasksState extends Equatable {
         page ?? 1,
         likeData ?? 0,
         totalCount ?? 0,
-        totalCountStream ?? 0
+        totalCountStream ?? 0,
+        count ?? 0,
       ];
 }

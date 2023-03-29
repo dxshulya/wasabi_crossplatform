@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wasabi_crossplatform/data/mappers/db/db_data_mapper.dart';
+import 'package:wasabi_crossplatform/domain/models/tasks/abstract_total_count.dart';
 import 'package:wasabi_crossplatform/domain/repositories/abstract_favourites_tasks_repository.dart';
 import 'package:wasabi_crossplatform/presentation/common/favourites_checked_button.dart';
 import 'package:wasabi_crossplatform/presentation/common/saved_checked_button.dart';
@@ -28,7 +29,7 @@ class TaskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool _isSaved = false;
-
+    final bloc = context.read<TasksBloc>();
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -68,25 +69,30 @@ class TaskCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 4),
                   child: BlocBuilder<TasksBloc, TasksState>(
-                    builder: (context, state) => SavedCheckedButton(
-                      alignment: Alignment.centerRight,
-                      initialChecked: _isSaved,
-                      onPressed: () {
-                        if (_isSaved == false) {
-                          context.read<TasksBloc>().add(
+                    builder: (context, state) => StreamBuilder<AbstractTotalCount>(
+                      stream: bloc.counter,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<AbstractTotalCount?> data) {
+                        return SavedCheckedButton(
+                          alignment: Alignment.centerRight,
+                          initialChecked: _isSaved,
+                          onPressed: () {
+                            if (_isSaved == false) {
+                              context.read<TasksBloc>().add(
                                 ChangedLikedEvent(
                                   model: _model.toDomain(),
                                 ),
                               );
-                        } else {
-                          context.read<TasksBloc>().add(
+                            } else {
+                              context.read<TasksBloc>().add(
                                 ChangedDislikeEvent(
                                   id: _model.id,
                                 ),
                               );
-                        }
-                        _isSaved = !_isSaved;
-                        context.read<TasksBloc>().add(TotalCountEvent());
+                            }
+                            _isSaved = !_isSaved;
+                          },
+                        );
                       },
                     ),
                   ),
