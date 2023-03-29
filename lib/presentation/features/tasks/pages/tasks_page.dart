@@ -14,9 +14,7 @@ import 'package:wasabi_crossplatform/presentation/features/settings/pages/settin
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_state.dart';
-import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/models/task_card_model.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/task_card.dart';
-import 'package:wasabi_crossplatform/utils/colorful_debugger.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
@@ -31,7 +29,6 @@ class TasksPage extends StatefulWidget {
 
 class _TasksPageState extends State<TasksPage> {
   ScrollController? _scrollController;
-
   bool _isSaved = false;
 
   @override
@@ -43,6 +40,8 @@ class _TasksPageState extends State<TasksPage> {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<TasksBloc>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(context.locale.tasks.title),
@@ -57,19 +56,32 @@ class _TasksPageState extends State<TasksPage> {
                   SavedPage.navigationPath,
                 );
               },
-              icon: FutureBuilder<AbstractTotalCount>(
-                future: state.totalCount,
+              icon: StreamBuilder<AbstractTotalCount>(
+                stream: bloc.counter,
                 builder: (BuildContext context,
                     AsyncSnapshot<AbstractTotalCount?> data) {
                   return Badge(
                     backgroundColor: AppColors.brandGreenColor,
                     label: Text(data.data?.totalCount.toString() ?? '0'),
                     isLabelVisible:
-                        (data.data?.totalCount ?? -1) < 0 ? false : true,
+                    (data.data?.totalCount ?? -1) < 0 ? false : true,
                     child: const Icon(Icons.save_rounded),
                   );
                 },
               ),
+              // icon: FutureBuilder<AbstractTotalCount>(
+              //   future: state.totalCount,
+              //   builder: (BuildContext context,
+              //       AsyncSnapshot<AbstractTotalCount?> data) {
+              //     return Badge(
+              //       backgroundColor: AppColors.brandGreenColor,
+              //       label: Text(data.data?.totalCount.toString() ?? '0'),
+              //       isLabelVisible:
+              //           (data.data?.totalCount ?? -1) < 0 ? false : true,
+              //       child: const Icon(Icons.save_rounded),
+              //     );
+              //   },
+              // ),
             ),
           ),
           BlocBuilder<FavouritesBloc, FavouritesState>(

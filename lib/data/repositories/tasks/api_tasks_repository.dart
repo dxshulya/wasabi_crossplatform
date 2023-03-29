@@ -35,6 +35,12 @@ class ApiTasksRepository implements AbstractTasksRepository {
   }
 
   @override
+  Stream<AbstractTotalCount> getTotalCountStream() async* {
+    var totalCount = await getTotalCount();
+    yield totalCount;
+  }
+
+  @override
   Future<AbstractTotalCount> getTotalCount() async {
     final response = await _apiService.loadTotalCount();
     return response.toDomain();

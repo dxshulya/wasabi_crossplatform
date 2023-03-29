@@ -12,6 +12,8 @@ class LoadDataEvent extends TasksEvent {}
 
 class TotalCountEvent extends TasksEvent {}
 
+class TotalCountStreamEvent extends TasksEvent {}
+
 class ChangedLikedEvent extends TasksEvent {
   final AbstractTask model;
 

@@ -86,6 +86,7 @@ class TaskCard extends StatelessWidget {
                               );
                         }
                         _isSaved = !_isSaved;
+                        context.read<TasksBloc>().add(TotalCountEvent());
                       },
                     ),
                   ),

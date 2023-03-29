@@ -11,4 +11,6 @@ abstract class AbstractTasksRepository {
   Future<AbstractMessage> deletedTask(String id);
 
   Future<AbstractTotalCount> getTotalCount();
+
+  Stream<AbstractTotalCount> getTotalCountStream();
 }
