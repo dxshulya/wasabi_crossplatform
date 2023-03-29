@@ -114,15 +114,15 @@ class MyApp extends StatelessWidget {
                             lazy: false,
                             create: (context) => ApiLoginRepository(
                               apiService: ApiService(
-                                onErrorHandler: (String code,
-                                    String message, String error) {
+                                onErrorHandler: (String code, String message,
+                                    String error) {
                                   context.read<ErrorBloc>().add(
-                                    ShowDialogEvent(
-                                      title: code,
-                                      message: message,
-                                      error: error,
-                                    ),
-                                  );
+                                        ShowDialogEvent(
+                                          title: code,
+                                          message: message,
+                                          error: error,
+                                        ),
+                                      );
                                 },
                               ),
                             ),
@@ -151,8 +151,8 @@ class MyApp extends StatelessWidget {
                             lazy: false,
                             create: (context) => ApiRegistrationRepository(
                               apiService: ApiService(
-                                onErrorHandler: (String code,
-                                    String message, String error) {
+                                onErrorHandler: (String code, String message,
+                                    String error) {
                                   context.read<ErrorBloc>().add(
                                         ShowDialogEvent(
                                           title: code,
@@ -195,15 +195,15 @@ class MyApp extends StatelessWidget {
                             lazy: false,
                             create: (context) => ApiTasksRepository(
                               apiService: ApiService(
-                                onErrorHandler: (String code,
-                                    String message, String error) {
+                                onErrorHandler: (String code, String message,
+                                    String error) {
                                   context.read<ErrorBloc>().add(
-                                    ShowDialogEvent(
-                                      title: code,
-                                      message: message,
-                                      error: error,
-                                    ),
-                                  );
+                                        ShowDialogEvent(
+                                          title: code,
+                                          message: message,
+                                          error: error,
+                                        ),
+                                      );
                                 },
                               ),
                             ),
@@ -231,15 +231,15 @@ class MyApp extends StatelessWidget {
                             lazy: false,
                             create: (context) => ApiSavedRepository(
                               apiService: ApiService(
-                                onErrorHandler: (String code,
-                                    String message, String error) {
+                                onErrorHandler: (String code, String message,
+                                    String error) {
                                   context.read<ErrorBloc>().add(
-                                    ShowDialogEvent(
-                                      title: code,
-                                      message: message,
-                                      error: error,
-                                    ),
-                                  );
+                                        ShowDialogEvent(
+                                          title: code,
+                                          message: message,
+                                          error: error,
+                                        ),
+                                      );
                                 },
                               ),
                             ),

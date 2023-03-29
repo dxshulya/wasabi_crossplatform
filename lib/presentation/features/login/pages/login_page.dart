@@ -106,31 +106,6 @@ class _LoginPageState extends State<LoginPage> {
                               });
                     }
                   }
-                  // final bloc = context.read<LoginBloc>();
-                  // final response = await bloc.state.response;
-                  // final String? login = response?.login.toString();
-                  // final String? token = response?.token.toString();
-                  final sp = await SharedPreferences.getInstance();
-                  // final tokenSP = sp.getString(Keys.userToken);
-                  // await sp.setString(Keys.userToken, token!);
-                  // await sp.setString(Keys.userName, login!);
-                  // Datastore.setUserToken(token!);
-                  // Datastore.setUserName(login!);
-                  // if (token != null) {
-                  //   Future.delayed(const Duration(seconds: 0)).then((value) => {
-                  //     Navigator.of(context).pushNamedAndRemoveUntil(
-                  //         TasksPage.navigationPath,
-                  //             (Route<dynamic> route) => false),
-                  //   });
-                  // }
-                  prettyPrint(
-                      tag: "Имя Res",
-                      value: sp.getString(Keys.userName),
-                      type: DebugType.error);
-                  prettyPrint(
-                      tag: "Токен Res",
-                      value: sp.getString(Keys.userToken),
-                      type: DebugType.error);
                 },
                 style: ElevatedButton.styleFrom(
                   elevation: 0,

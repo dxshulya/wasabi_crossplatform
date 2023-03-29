@@ -17,6 +17,7 @@ class PageChangedEvent extends SavedEvent {
 }
 
 class NextPageLoadEvent extends SavedEvent {}
+
 class PrevPageLoadEvent extends SavedEvent {}
 
 class LoadDataEvent extends SavedEvent {}

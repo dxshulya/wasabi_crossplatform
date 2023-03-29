@@ -13,4 +13,3 @@ class _FilteredContainerState extends State<FilteredContainer> {
     return const Placeholder();
   }
 }
-

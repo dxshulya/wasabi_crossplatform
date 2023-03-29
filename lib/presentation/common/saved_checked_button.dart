@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wasabi_crossplatform/presentation/common/favourites_icon_checked_button.dart';
 import 'package:wasabi_crossplatform/presentation/common/saved_icon_checked_button.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 

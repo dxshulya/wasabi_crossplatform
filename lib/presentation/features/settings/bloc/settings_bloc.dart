@@ -5,7 +5,6 @@ import 'package:wasabi_crossplatform/blocs/locale_bloc/locale_bloc.dart';
 import 'package:wasabi_crossplatform/blocs/locale_bloc/locale_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_event.dart';
-import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_state.dart';
 import 'package:wasabi_crossplatform/utils/datastore/datastore.dart';
@@ -15,11 +14,11 @@ import 'package:wasabi_crossplatform/utils/theme_mode_ext.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final LocaleBloc _localeBloc;
+
   // final LoginBloc _loginBloc;
   final FavouritesBloc _favouritesBloc;
 
-  SettingsBloc(
-      LocaleBloc localeBloc, FavouritesBloc favouritesBloc)
+  SettingsBloc(LocaleBloc localeBloc, FavouritesBloc favouritesBloc)
       : _localeBloc = localeBloc,
         // _loginBloc = loginBloc,
         _favouritesBloc = favouritesBloc,

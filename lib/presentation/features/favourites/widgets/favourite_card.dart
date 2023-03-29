@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wasabi_crossplatform/data/mappers/db/db_data_mapper.dart';
 import 'package:wasabi_crossplatform/domain/repositories/abstract_favourites_tasks_repository.dart';
 import 'package:wasabi_crossplatform/presentation/common/favourites_checked_button.dart';
-import 'package:wasabi_crossplatform/presentation/common/saved_checked_button.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_state.dart';
@@ -68,10 +67,10 @@ class FavouriteCard extends StatelessWidget {
                           .checkForFavouriteById(_model.id),
                       onPressed: () {
                         context.read<FavouritesBloc>().add(
-                          ChangedFavourite(
-                            model: _model.toDomain(),
-                          ),
-                        );
+                              ChangedFavourite(
+                                model: _model.toDomain(),
+                              ),
+                            );
                       },
                     ),
                   ),
