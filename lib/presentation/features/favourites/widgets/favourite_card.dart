@@ -38,9 +38,14 @@ class FavouriteCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(_index.toString()),
+          Text(
+            _index.toString(),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: AppColors.lightColorSchemeSeed),
+          ),
           const SizedBox(
-            height: 8,
+            height: 9,
           ),
           Text(_model.formula),
           const SizedBox(
@@ -50,7 +55,7 @@ class FavouriteCard extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          Text(_model.answer),
+          Text('Ответ: ${_model.answer}'),
           const SizedBox(
             height: 16,
           ),
