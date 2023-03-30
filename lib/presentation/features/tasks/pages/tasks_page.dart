@@ -29,12 +29,10 @@ class TasksPage extends StatefulWidget {
 
 class _TasksPageState extends State<TasksPage> {
   ScrollController? _scrollController;
-  bool _isSaved = false;
 
   @override
   void didChangeDependencies() {
     context.read<TasksBloc>().add(LoadDataEvent());
-    // context.read<TasksBloc>().add(TotalCountStreamEvent());
     super.didChangeDependencies();
   }
 
@@ -119,8 +117,6 @@ class _TasksPageState extends State<TasksPage> {
                                       (BuildContext context, int index) {
                                     final model = data.data?.tasks[index]
                                         .toTaskCardModel();
-
-                                    bool isSaved = false;
 
                                     if (model != null) {
                                       return TaskCard(

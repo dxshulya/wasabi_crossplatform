@@ -23,7 +23,7 @@ class Database extends _$Database {
     });
   }
 
-  Future<int?> moviesCount() async {
+  Future<int?> tasksCount() async {
     var countExp = taskTable.id.count();
     final query = selectOnly(taskTable)..addColumns([countExp]);
     var result = await query.map((row) => row.read(countExp)).getSingle();

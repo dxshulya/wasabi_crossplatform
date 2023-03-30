@@ -21,7 +21,7 @@ class ChangedLikedEvent extends TasksEvent {
 }
 
 class ChangedDislikeEvent extends TasksEvent {
-  final String id;
+  final AbstractTask model;
 
-  const ChangedDislikeEvent({required this.id});
+  const ChangedDislikeEvent({required this.model});
 }

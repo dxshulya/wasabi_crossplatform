@@ -13,7 +13,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   TasksBloc({
     required AbstractTasksRepository repository,
   })  : _repository = repository,
-        super(const TasksState(page: 1)) {
+        super(TasksState(page: 1, tasksSavedIds: [])) {
     on<LoadDataEvent>(_onLoadData);
     on<ChangedLikedEvent>(_onChangedLiked);
     on<ChangedDislikeEvent>(_onChangedDisliked);
@@ -57,26 +57,38 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
   FutureOr<void> _onChangedLiked(
       ChangedLikedEvent event, Emitter<TasksState> emit) async {
-    emit(
-      state.copyWith(
-        likeData: _repository.savedTask(
-          BaseTask(
-            id: event.model.id,
-            formula: event.model.formula,
-            task: event.model.task,
-            answer: event.model.answer,
+    if (!state.tasksSavedIds.contains(event.model.id)) {
+      emit(
+        state.copyWith(
+          likeData: _repository.savedTask(
+            BaseTask(
+              id: event.model.id,
+              formula: event.model.formula,
+              task: event.model.task,
+              answer: event.model.answer,
+            ),
           ),
         ),
-      ),
-    );
+      );
+      state.tasksSavedIds.add(event.model.id);
+    }
+    else {
+      emit(
+        state.copyWith(
+          likeData: _repository.deletedTask(event.model.id),
+        ),
+      );
+      state.tasksSavedIds.remove(event.model.id);
+    }
   }
 
   FutureOr<void> _onChangedDisliked(
       ChangedDislikeEvent event, Emitter<TasksState> emit) async {
     emit(
       state.copyWith(
-        likeData: _repository.deletedTask(event.id),
+        likeData: _repository.deletedTask(event.model.id),
       ),
     );
+    state.tasksSavedIds.remove(event.model.id);
   }
 }

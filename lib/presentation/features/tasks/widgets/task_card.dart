@@ -15,10 +15,7 @@ import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/models/
 import 'package:wasabi_crossplatform/utils/colors.dart';
 
 class TaskCard extends StatelessWidget {
-  const TaskCard(
-      {required TaskCardModel model,
-      required int index,
-      Key? key})
+  const TaskCard({required TaskCardModel model, required int index, Key? key})
       : _model = model,
         _index = index,
         super(key: key);
@@ -28,7 +25,6 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool _isSaved = false;
     final bloc = context.read<TasksBloc>();
     return Container(
       decoration: BoxDecoration(
@@ -69,28 +65,21 @@ class TaskCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 4),
                   child: BlocBuilder<TasksBloc, TasksState>(
-                    builder: (context, state) => StreamBuilder<AbstractTotalCount>(
+                    builder: (context, state) =>
+                        StreamBuilder<AbstractTotalCount>(
                       stream: bloc.counter,
                       builder: (BuildContext context,
                           AsyncSnapshot<AbstractTotalCount?> data) {
                         return SavedCheckedButton(
                           alignment: Alignment.centerRight,
-                          initialChecked: _isSaved,
+                          initialChecked:
+                              state.tasksSavedIds.contains(_model.id),
                           onPressed: () {
-                            if (_isSaved == false) {
-                              context.read<TasksBloc>().add(
-                                ChangedLikedEvent(
-                                  model: _model.toDomain(),
-                                ),
-                              );
-                            } else {
-                              context.read<TasksBloc>().add(
-                                ChangedDislikeEvent(
-                                  id: _model.id,
-                                ),
-                              );
-                            }
-                            _isSaved = !_isSaved;
+                            context.read<TasksBloc>().add(
+                                  ChangedLikedEvent(
+                                    model: _model.toDomain(),
+                                  ),
+                                );
                           },
                         );
                       },
