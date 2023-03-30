@@ -60,7 +60,7 @@ class _TasksPageState extends State<TasksPage> {
                     backgroundColor: AppColors.brandGreenColor,
                     label: Text(data.data?.totalCount.toString() ?? '0'),
                     isLabelVisible:
-                    (data.data?.totalCount ?? -1) < 0 ? false : true,
+                    (data.data?.totalCount ?? 0) < 1 ? false : true,
                     child: const Icon(Icons.save_rounded),
                   );
                 },

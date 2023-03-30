@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:wasabi_crossplatform/domain/models/tasks/abstract_task.dart';
 
 abstract class SavedEvent extends Equatable {
   const SavedEvent();
@@ -21,3 +22,9 @@ class NextPageLoadEvent extends SavedEvent {}
 class PrevPageLoadEvent extends SavedEvent {}
 
 class LoadDataEvent extends SavedEvent {}
+
+class ChangedLikedEvent extends SavedEvent {
+  final AbstractTask model;
+
+  const ChangedLikedEvent({required this.model});
+}

@@ -16,7 +16,6 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
         super(TasksState(page: 1, tasksSavedIds: [])) {
     on<LoadDataEvent>(_onLoadData);
     on<ChangedLikedEvent>(_onChangedLiked);
-    on<ChangedDislikeEvent>(_onChangedDisliked);
     on<TotalCountEvent>(_onTotalCountData);
     on<TotalCountStreamEvent>(_onTotalCountDataStream);
   }
@@ -80,15 +79,5 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       );
       state.tasksSavedIds.remove(event.model.id);
     }
-  }
-
-  FutureOr<void> _onChangedDisliked(
-      ChangedDislikeEvent event, Emitter<TasksState> emit) async {
-    emit(
-      state.copyWith(
-        likeData: _repository.deletedTask(event.model.id),
-      ),
-    );
-    state.tasksSavedIds.remove(event.model.id);
   }
 }

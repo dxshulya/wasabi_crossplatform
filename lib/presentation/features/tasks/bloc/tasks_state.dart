@@ -48,6 +48,6 @@ class TasksState extends Equatable {
         totalCount ?? 0,
         totalCountStream ?? 0,
         count ?? 0,
-        tasksSavedIds ?? [],
+        tasksSavedIds,
       ];
 }
