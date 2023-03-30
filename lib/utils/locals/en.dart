@@ -35,6 +35,9 @@ class LocaleEn implements LocaleBase {
 
   @override
   ValidationLocaleBase get validation => ValidationLocalEn();
+
+  @override
+  FiltersLocaleBase get filters => FiltersLocalEn();
 }
 
 class AppLocalEn implements AppLocaleBase {
@@ -192,4 +195,16 @@ class ValidationLocalEn implements ValidationLocaleBase {
 
   @override
   String get minSymbolsPattern => 'Minimum of 7 characters!';
+}
+
+class FiltersLocalEn implements FiltersLocaleBase {
+  @override
+  String get apply => 'Apply';
+
+  @override
+  String get byTask => 'By task';
+
+  @override
+  String get reset => 'Reset';
+
 }

@@ -9,6 +9,7 @@ import 'package:wasabi_crossplatform/presentation/common/error.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/pages/favourites_page.dart';
+import 'package:wasabi_crossplatform/presentation/features/filtering_and_sorting/widgets/modal_bottom_sheet.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/pages/saved_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/pages/settings_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_bloc.dart';
@@ -42,8 +43,22 @@ class _TasksPageState extends State<TasksPage> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.sort_rounded),
+        ),
         title: Text(context.locale.tasks.title),
         actions: [
+          IconButton(
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (ctx) {
+                    return const ModalBottomSheet();
+                  });
+            },
+            icon: const Icon(Icons.filter_alt_rounded),
+          ),
           BlocBuilder<TasksBloc, TasksState>(
             builder: (context, state) => IconButton(
               onPressed: () {

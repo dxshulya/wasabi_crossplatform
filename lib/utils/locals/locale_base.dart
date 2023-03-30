@@ -20,6 +20,8 @@ abstract class LocaleBase {
   SettingsLocaleBase get settings;
 
   ValidationLocaleBase get validation;
+
+  FiltersLocaleBase get filters;
 }
 
 abstract class AppLocaleBase {
@@ -130,4 +132,12 @@ abstract class ValidationLocaleBase {
   String get minSymbolsPattern;
 
   String get maxSymbolsPattern;
+}
+
+abstract class FiltersLocaleBase {
+  String get apply;
+
+  String get reset;
+
+  String get byTask;
 }

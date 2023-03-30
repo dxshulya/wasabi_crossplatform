@@ -35,6 +35,9 @@ class LocaleRu implements LocaleBase {
 
   @override
   ValidationLocaleBase get validation => ValidationLocalRu();
+
+  @override
+  FiltersLocaleBase get filters => FiltersLocalRu();
 }
 
 class AppLocalRu implements AppLocaleBase {
@@ -192,4 +195,15 @@ class ValidationLocalRu implements ValidationLocaleBase {
 
   @override
   String get minSymbolsPattern => 'Минимум 7 символов!';
+}
+
+class FiltersLocalRu implements FiltersLocaleBase {
+  @override
+  String get apply => 'Применить';
+
+  @override
+  String get byTask => 'По тексту задачи';
+
+  @override
+  String get reset => 'Сбросить';
 }
