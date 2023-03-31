@@ -7,6 +7,7 @@ import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_even
 import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/widgets/models/saved_card_model.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
+import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
 class SavedCard extends StatelessWidget {
   const SavedCard({required SavedCardModel model, required int index, Key? key})
@@ -53,7 +54,7 @@ class SavedCard extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          Text('Ответ: ${_model.answer}'),
+          Text("${context.locale.tasks.answer} ${_model.answer}"),
           const SizedBox(
             height: 16,
           ),

@@ -13,7 +13,6 @@ import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_bloc
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/models/task_card_model.dart';
-import 'package:wasabi_crossplatform/utils/colorful_debugger.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
@@ -160,7 +159,8 @@ class TaskCard extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             child: OutlinedButton(
               onPressed: () {
-                Share.share('${_model.formula}\n\n${_model.task}\n\n${_model.answer}');
+                Share.share(
+                    '${_model.formula}\n\n${_model.task}\n\n${_model.answer}');
               },
               style: OutlinedButton.styleFrom(
                 elevation: 0,

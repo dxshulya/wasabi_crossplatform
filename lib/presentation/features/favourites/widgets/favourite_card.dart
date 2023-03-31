@@ -8,6 +8,7 @@ import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favou
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/widgets/models/favourite_card_model.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
+import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
 class FavouriteCard extends StatelessWidget {
   const FavouriteCard(
@@ -55,7 +56,7 @@ class FavouriteCard extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          Text('Ответ: ${_model.answer}'),
+          Text("${context.locale.tasks.answer} ${_model.answer}"),
           const SizedBox(
             height: 16,
           ),
