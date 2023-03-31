@@ -30,14 +30,16 @@ class TaskCard extends StatelessWidget {
     final bloc = context.read<TasksBloc>();
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.lightColorSchemeSeed.withOpacity(0.2),
-            blurRadius: 1,
-            offset: const Offset(0, 0), // Shadow position
-          ),
-        ],
+        border: Border.all(color: AppColors.lightColorSchemeSeed),
+        ///чтобы на тёмной теме было видно
+        // color: Colors.white,
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: AppColors.lightColorSchemeSeed.withOpacity(0.2),
+        //     blurRadius: 1,
+        //     offset: const Offset(0, 0), // Shadow position
+        //   ),
+        // ],
         borderRadius: BorderRadius.circular(10),
       ),
       margin: const EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),

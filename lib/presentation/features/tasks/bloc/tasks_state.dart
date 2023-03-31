@@ -3,8 +3,11 @@ import 'package:wasabi_crossplatform/domain/models/auth/abstract_message.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_tasks.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_total_count.dart';
 
+enum TaskStatus { initial, success, failure }
+
 class TasksState extends Equatable {
   final Future<AbstractTasks>? data;
+  final Future<AbstractTasks>? fetchedData;
   final Future<AbstractMessage>? likeData;
   final Future<AbstractTotalCount>? totalCount;
   final Stream<AbstractTotalCount>? totalCountStream;
@@ -15,6 +18,7 @@ class TasksState extends Equatable {
 
   TasksState({
     this.data,
+    this.fetchedData,
     this.page,
     this.likeData,
     this.totalCount,
@@ -26,6 +30,7 @@ class TasksState extends Equatable {
 
   TasksState copyWith({
     Future<AbstractTasks>? data,
+    Future<AbstractTasks>? fetchedData,
     Future<AbstractMessage>? likeData,
     Future<AbstractTotalCount>? totalCount,
     Stream<AbstractTotalCount>? totalCountStream,
@@ -36,6 +41,7 @@ class TasksState extends Equatable {
   }) =>
       TasksState(
         data: data ?? this.data,
+        fetchedData: fetchedData ?? this.fetchedData,
         page: page ?? this.page,
         likeData: likeData ?? this.likeData,
         totalCount: totalCount ?? this.totalCount,
@@ -55,5 +61,6 @@ class TasksState extends Equatable {
         count ?? 0,
         tasksSavedIds,
         tasksExpandedIds,
+        fetchedData ?? 0,
       ];
 }

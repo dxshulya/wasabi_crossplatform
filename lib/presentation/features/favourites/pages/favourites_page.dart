@@ -6,6 +6,7 @@ import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favou
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/widgets/favourite_card.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/widgets/mappers/task_domain_to_favourite_card_model.dart';
+import 'package:wasabi_crossplatform/presentation/features/settings/pages/settings_page.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
 class FavouritesPage extends StatefulWidget {
@@ -25,6 +26,17 @@ class _FavouritesPageState extends State<FavouritesPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.locale.favourites.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                SettingsPage.navigationPath,
+              );
+            },
+            icon: const Icon(Icons.settings_rounded),
+          ),
+        ],
       ),
       body: BlocBuilder<FavouritesBloc, FavouritesState>(
         buildWhen: (oldState, newState) => oldState.tasks != newState.tasks,

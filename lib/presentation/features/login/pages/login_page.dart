@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/widgets/email_text_field.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/widgets/password_text_field.dart';
 import 'package:wasabi_crossplatform/presentation/features/registration/pages/registration_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/pages/tasks_page.dart';
-import 'package:wasabi_crossplatform/utils/colorful_debugger.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 import 'package:wasabi_crossplatform/utils/datastore/datastore.dart';
-import 'package:wasabi_crossplatform/utils/keys.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
 class LoginPage extends StatefulWidget {
@@ -25,6 +22,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late bool isLoading;
+
+  @override
+  void initState() {
+    isLoading = false;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +38,13 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Visibility(
+              visible: isLoading,
+              child: CircularProgressIndicator(),
+            ),
+            const SizedBox(
+              height: 48,
+            ),
             Text(
               context.locale.app.appName,
               style: TextStyle(
@@ -93,10 +105,12 @@ class _LoginPageState extends State<LoginPage> {
               height: 16,
             ),
             ElevatedButton(
-                onPressed: () async {
-                  if (widget._formKey.currentState!.validate()) {
-                    widget._formKey.currentState!.save();
-                    context.read<LoginBloc>().add(SendDataEvent());
+              onPressed: () {
+                isLoading = true;
+                if (widget._formKey.currentState!.validate()) {
+                  widget._formKey.currentState!.save();
+                  context.read<LoginBloc>().add(SendDataEvent());
+                  Future.delayed(const Duration(seconds: 1), () async {
                     if (await Datastore.isTokenPresent()) {
                       Future.delayed(const Duration(seconds: 0))
                           .then((value) => {
@@ -105,37 +119,40 @@ class _LoginPageState extends State<LoginPage> {
                                     (Route<dynamic> route) => false),
                               });
                     }
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  side: BorderSide(
-                      width: 1.0,
-                      color: AppColors.lightColorSchemeSeed.withOpacity(0.8)),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  backgroundColor:
-                      AppColors.lightColorSchemeSeed.withOpacity(0.8),
-                  foregroundColor: AppColors.lightColorSchemeSeed,
+                    // isLoading = false;
+                  });
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                side: BorderSide(
+                    width: 1.0,
+                    color: AppColors.lightColorSchemeSeed.withOpacity(0.8)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      context.locale.intro.loginBtnText,
-                      style: const TextStyle(color: Colors.white),
+                padding: const EdgeInsets.all(10),
+                backgroundColor:
+                    AppColors.lightColorSchemeSeed.withOpacity(0.8),
+                foregroundColor: AppColors.lightColorSchemeSeed,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    context.locale.intro.loginBtnText,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Icon(
+                      Icons.login_rounded,
+                      color: Colors.white,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Icon(
-                        Icons.login_rounded,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                )),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

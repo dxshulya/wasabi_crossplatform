@@ -45,7 +45,7 @@ class _TasksPageState extends State<TasksPage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {},
-          icon: const Icon(Icons.sort_rounded),
+          icon: const Icon(Icons.filter_list_off_outlined),
         ),
         title: Text(context.locale.tasks.title),
         actions: [

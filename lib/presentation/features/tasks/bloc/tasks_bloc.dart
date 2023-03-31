@@ -25,9 +25,9 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       LoadDataEvent event, Emitter<TasksState> emit) async {
     emit(
       state.copyWith(
-        page: 1,
+        page: state.page,
         data: _repository.fetchTasks(
-          page: 1,
+          page: state.page ?? 1,
         ),
       ),
     );
@@ -71,8 +71,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
         ),
       );
       state.tasksSavedIds.add(event.model.id);
-    }
-    else {
+    } else {
       emit(
         state.copyWith(
           likeData: _repository.deletedTask(event.model.id),
@@ -86,8 +85,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       ChangeWidgetExpandedEvent event, Emitter<TasksState> emit) {
     if (state.tasksExpandedIds.contains(event.model.id)) {
       state.tasksExpandedIds.add(event.model.id);
-    }
-    else {
+    } else {
       state.tasksExpandedIds.remove(event.model.id);
     }
   }

@@ -96,18 +96,20 @@ class _RegistrationPageState extends State<RegistrationPage> {
               height: 16,
             ),
             ElevatedButton(
-                onPressed: () async {
+                onPressed: () {
                   if (widget._formKey.currentState!.validate()) {
                     widget._formKey.currentState!.save();
                     context.read<RegistrationBloc>().add(SendDataEvent());
-                    if (await Datastore.isTokenPresent()) {
-                      Future.delayed(const Duration(seconds: 0))
-                          .then((value) => {
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    TasksPage.navigationPath,
-                                    (Route<dynamic> route) => false),
-                              });
-                    }
+                    Future.delayed(const Duration(seconds: 1), () async {
+                      if (await Datastore.isTokenPresent()) {
+                        Future.delayed(const Duration(seconds: 0))
+                            .then((value) => {
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      TasksPage.navigationPath,
+                                      (Route<dynamic> route) => false),
+                                });
+                      }
+                    });
                   }
                 },
                 style: ElevatedButton.styleFrom(

@@ -84,10 +84,7 @@ class ApiService {
       url,
       data: user.toJson(),
     );
-    final result = LoginDTO.fromJson(response.data);
-    Datastore.setUserToken(result.token);
-    Datastore.setUserName(result.login);
-    return result;
+    return LoginDTO.fromJson(response.data);
   }
 
   Future<RegistrationDTO> postRegistration({required UserDTO user}) async {
