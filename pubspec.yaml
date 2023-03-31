@@ -41,6 +41,9 @@ dependencies:
   # работа с svg
   flutter_svg: ^2.0.4
 
+  # кнопка "Поделиться"
+  share_plus: ^6.3.1
+
   cupertino_icons: ^1.0.2
 
 dev_dependencies:

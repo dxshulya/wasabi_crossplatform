@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:wasabi_crossplatform/data/mappers/db/db_data_mapper.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_total_count.dart';
 import 'package:wasabi_crossplatform/domain/repositories/abstract_favourites_tasks_repository.dart';
@@ -12,6 +13,7 @@ import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_bloc
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/models/task_card_model.dart';
+import 'package:wasabi_crossplatform/utils/colorful_debugger.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
@@ -157,7 +159,9 @@ class TaskCard extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                Share.share('${_model.formula}\n\n${_model.task}\n\n${_model.answer}');
+              },
               style: OutlinedButton.styleFrom(
                 elevation: 0,
                 side: BorderSide(
