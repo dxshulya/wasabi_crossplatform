@@ -11,6 +11,7 @@ class TasksState extends Equatable {
   final int? page;
   final int? count;
   List<String> tasksSavedIds;
+  List<String> tasksExpandedIds;
 
   TasksState({
     this.data,
@@ -20,6 +21,7 @@ class TasksState extends Equatable {
     this.totalCountStream,
     this.count,
     required this.tasksSavedIds,
+    required this.tasksExpandedIds,
   });
 
   TasksState copyWith({
@@ -30,15 +32,18 @@ class TasksState extends Equatable {
     int? page,
     int? count,
     List<String>? tasksSavedIds,
+    List<String>? tasksExpandedIds,
   }) =>
       TasksState(
-          data: data ?? this.data,
-          page: page ?? this.page,
-          likeData: likeData ?? this.likeData,
-          totalCount: totalCount ?? this.totalCount,
-          totalCountStream: totalCountStream ?? this.totalCountStream,
-          count: count ?? this.count,
-          tasksSavedIds: tasksSavedIds ?? this.tasksSavedIds);
+        data: data ?? this.data,
+        page: page ?? this.page,
+        likeData: likeData ?? this.likeData,
+        totalCount: totalCount ?? this.totalCount,
+        totalCountStream: totalCountStream ?? this.totalCountStream,
+        count: count ?? this.count,
+        tasksSavedIds: tasksSavedIds ?? this.tasksSavedIds,
+        tasksExpandedIds: tasksExpandedIds ?? this.tasksExpandedIds,
+      );
 
   @override
   List<Object> get props => [
@@ -49,5 +54,6 @@ class TasksState extends Equatable {
         totalCountStream ?? 0,
         count ?? 0,
         tasksSavedIds,
+        tasksExpandedIds,
       ];
 }

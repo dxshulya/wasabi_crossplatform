@@ -19,3 +19,9 @@ class ChangedLikedEvent extends TasksEvent {
 
   const ChangedLikedEvent({required this.model});
 }
+
+class ChangeWidgetExpandedEvent extends TasksEvent {
+  final AbstractTask model;
+
+  const ChangeWidgetExpandedEvent({required this.model});
+}

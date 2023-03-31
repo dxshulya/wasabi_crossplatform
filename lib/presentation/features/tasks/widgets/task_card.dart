@@ -13,6 +13,7 @@ import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_even
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/models/task_card_model.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
+import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard({required TaskCardModel model, required int index, Key? key})
@@ -58,11 +59,47 @@ class TaskCard extends StatelessWidget {
           ),
           Text(_model.task),
           const SizedBox(
-            height: 16,
+            height: 8,
           ),
-          Text('Ответ: ${_model.answer}'),
-          const SizedBox(
-            height: 16,
+          ListTileTheme(
+            contentPadding:
+                const EdgeInsets.only(top: 0, left: 0, right: 16, bottom: 0),
+            child: Theme(
+              data:
+                  Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              child: ExpansionTile(
+                title: Text(
+                  context.locale.tasks.answer,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 15,
+                  ),
+                ),
+                initiallyExpanded:
+                    bloc.state.tasksExpandedIds.contains(_model.id),
+                onExpansionChanged: (value) {
+                  if (value == false) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    bloc.state.tasksExpandedIds.remove(_model.id);
+                  } else {
+                    bloc.state.tasksExpandedIds.add(_model.id);
+                  }
+                },
+                childrenPadding: const EdgeInsets.only(
+                    left: 4, top: 0, right: 4, bottom: 16),
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      _model.answer,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.lightColorSchemeSeed),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
           Row(
             children: [
@@ -113,6 +150,31 @@ class TaskCard extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: OutlinedButton(
+              onPressed: () {},
+              style: OutlinedButton.styleFrom(
+                elevation: 0,
+                side: BorderSide(
+                    width: 1.0, color: AppColors.lightColorSchemeSeed),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding:
+                    const EdgeInsets.only(left: 0, right: 0, top: 4, bottom: 4),
+                backgroundColor: Colors.transparent,
+                foregroundColor: AppColors.lightColorSchemeSeed,
+              ),
+              child: Icon(
+                Icons.share_rounded,
+                color: AppColors.lightColorSchemeSeed,
+              ),
+            ),
           ),
         ],
       ),

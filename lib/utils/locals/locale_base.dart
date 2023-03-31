@@ -74,6 +74,8 @@ abstract class AuthLocaleBase {
 
 abstract class TasksLocaleBase {
   String get title;
+
+  String get answer;
 }
 
 abstract class CommonLocaleBase {

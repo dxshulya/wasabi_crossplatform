@@ -113,6 +113,9 @@ class AuthLocalRu implements AuthLocaleBase {
 class TasksLocalRu implements TasksLocaleBase {
   @override
   String get title => 'Задачи';
+
+  @override
+  String get answer => 'Ответ:';
 }
 
 class CommonLocalRu implements CommonLocaleBase {

@@ -13,11 +13,12 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   TasksBloc({
     required AbstractTasksRepository repository,
   })  : _repository = repository,
-        super(TasksState(page: 1, tasksSavedIds: [])) {
+        super(TasksState(page: 1, tasksSavedIds: [], tasksExpandedIds: [])) {
     on<LoadDataEvent>(_onLoadData);
     on<ChangedLikedEvent>(_onChangedLiked);
     on<TotalCountEvent>(_onTotalCountData);
     on<TotalCountStreamEvent>(_onTotalCountDataStream);
+    on<ChangeWidgetExpandedEvent>(_onChangeWidgetExpanded);
   }
 
   FutureOr<void> _onLoadData(
@@ -78,6 +79,16 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
         ),
       );
       state.tasksSavedIds.remove(event.model.id);
+    }
+  }
+
+  void _onChangeWidgetExpanded(
+      ChangeWidgetExpandedEvent event, Emitter<TasksState> emit) {
+    if (state.tasksExpandedIds.contains(event.model.id)) {
+      state.tasksExpandedIds.add(event.model.id);
+    }
+    else {
+      state.tasksExpandedIds.remove(event.model.id);
     }
   }
 }

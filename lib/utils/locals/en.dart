@@ -113,6 +113,9 @@ class AuthLocalEn implements AuthLocaleBase {
 class TasksLocalEn implements TasksLocaleBase {
   @override
   String get title => 'Tasks';
+
+  @override
+  String get answer => 'Answer:';
 }
 
 class CommonLocalEn implements CommonLocaleBase {
