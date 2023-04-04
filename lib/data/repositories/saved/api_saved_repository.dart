@@ -32,7 +32,9 @@ class ApiSavedRepository implements AbstractSavedRepository {
             id: task.id,
             formula: task.formula,
             task: task.task,
-            answer: task.answer));
+            answer: task.answer,
+            datetime: task.datetime,
+            type: task.type));
     return response.toDomain();
   }
 }

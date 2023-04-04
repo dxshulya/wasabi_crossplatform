@@ -210,4 +210,7 @@ class FiltersLocalEn implements FiltersLocaleBase {
   @override
   String get reset => 'Reset';
 
+  @override
+  String get byType => 'By type';
+
 }

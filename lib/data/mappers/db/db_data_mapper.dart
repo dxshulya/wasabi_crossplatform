@@ -12,6 +12,8 @@ extension DomainToTaskTableData on AbstractTask {
       formula: formula,
       task: task,
       answer: answer,
+      type: type,
+      datetime: datetime,
     );
   }
 }
@@ -23,6 +25,8 @@ extension TaskTableDataToDomain on TaskTableData {
       formula: formula,
       task: task,
       answer: answer,
+      datetime: datetime,
+      type: type,
     );
   }
 }
@@ -33,6 +37,8 @@ extension AbstractTaskToTaskCardModel on AbstractTask {
         answer: answer,
         formula: formula,
         task: task,
+        datetime: datetime,
+        type: type,
       );
 }
 
@@ -42,6 +48,8 @@ extension TaskCardModelToDomain on TaskCardModel {
         task: task,
         answer: answer,
         formula: formula,
+        datetime: datetime,
+        type: type,
       );
 }
 
@@ -51,6 +59,8 @@ extension SavedCardModelToDomain on SavedCardModel {
         task: task,
         answer: answer,
         formula: formula,
+        datetime: datetime,
+        type: type,
       );
 }
 
@@ -60,5 +70,7 @@ extension FavouriteCardModelToDomain on FavouriteCardModel {
         task: task,
         answer: answer,
         formula: formula,
+        datetime: datetime,
+        type: type,
       );
 }

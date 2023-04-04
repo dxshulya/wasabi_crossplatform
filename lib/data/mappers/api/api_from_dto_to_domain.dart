@@ -27,6 +27,8 @@ extension TaskFromDTOToDomain on TaskDTO {
       formula: formula,
       task: task,
       answer: answer,
+      datetime: datetime,
+      type: type,
     );
   }
 }

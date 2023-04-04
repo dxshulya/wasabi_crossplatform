@@ -11,4 +11,8 @@ class TaskTable extends Table {
   TextColumn get task => text()();
 
   TextColumn get answer => text()();
+
+  TextColumn get datetime => text()();
+
+  TextColumn get type => text()();
 }

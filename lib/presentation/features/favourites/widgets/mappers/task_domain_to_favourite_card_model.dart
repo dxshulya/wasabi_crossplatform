@@ -8,6 +8,8 @@ extension TaskDomainToFavouriteCardModelCardModel on AbstractTask {
       formula: formula,
       task: task,
       answer: answer,
+      datetime: datetime,
+      type: type,
     );
   }
 }

@@ -30,7 +30,12 @@ class ApiTasksRepository implements AbstractTasksRepository {
   Future<AbstractMessage> savedTask(AbstractTask task) async {
     final response = await _apiService.postFavourite(
         task: TaskDTO(
-            id: task.id, formula: task.formula, task: task.task, answer: task.answer));
+            id: task.id,
+            formula: task.formula,
+            task: task.task,
+            answer: task.answer,
+            datetime: task.datetime,
+            type: task.type));
     return response.toDomain();
   }
 

@@ -55,6 +55,7 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
               ],
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -68,7 +69,22 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(context.locale.filters.byType),
+                      // FilterChip(
+                      //   label: Text('1'),
+                      //   onSelected: (bool value) {},
+                      // ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, top: 16, bottom: 16),
                   child: Row(
                     children: [
                       Expanded(

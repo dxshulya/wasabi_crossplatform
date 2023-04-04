@@ -209,4 +209,7 @@ class FiltersLocalRu implements FiltersLocaleBase {
 
   @override
   String get reset => 'Сбросить';
+
+  @override
+  String get byType => 'По типу задачи';
 }

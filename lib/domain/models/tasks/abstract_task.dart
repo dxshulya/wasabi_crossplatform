@@ -1,4 +1,6 @@
-abstract class AbstractTask {
+import 'package:wasabi_crossplatform/domain/models/tasks/types/enum_type_from_string.dart';
+
+abstract class AbstractTask with EnumTypeFromString {
   String get id;
 
   String get formula;
@@ -6,4 +8,9 @@ abstract class AbstractTask {
   String get task;
 
   String get answer;
+
+  String get datetime;
+
+  @override
+  String get type;
 }

@@ -11,6 +11,8 @@ TaskDTO _$TaskDTOFromJson(Map<String, dynamic> json) => TaskDTO(
       formula: json['formula'] as String? ?? '',
       task: json['text'] as String? ?? '',
       answer: json['answer'] as String? ?? '',
+      datetime: json['datetime'] as String? ?? '',
+      type: json['type'] as String? ?? '',
     );
 
 Map<String, dynamic> _$TaskDTOToJson(TaskDTO instance) => <String, dynamic>{
@@ -18,4 +20,6 @@ Map<String, dynamic> _$TaskDTOToJson(TaskDTO instance) => <String, dynamic>{
       'formula': instance.formula,
       'text': instance.task,
       'answer': instance.answer,
+      'datetime': instance.datetime,
+      'type': instance.type,
     };

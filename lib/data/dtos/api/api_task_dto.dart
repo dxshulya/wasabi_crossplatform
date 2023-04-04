@@ -9,6 +9,8 @@ class TaskDTO {
     required this.formula,
     required this.task,
     required this.answer,
+    required this.datetime,
+    required this.type,
   });
 
   @JsonKey(name: 'id', defaultValue: '')
@@ -22,6 +24,12 @@ class TaskDTO {
 
   @JsonKey(name: 'answer', defaultValue: '')
   final String answer;
+
+  @JsonKey(name: 'datetime', defaultValue: '')
+  final String datetime;
+
+  @JsonKey(name: 'type', defaultValue: '')
+  final String type;
 
   factory TaskDTO.fromJson(Map<String, dynamic> json) =>
       _$TaskDTOFromJson(json);

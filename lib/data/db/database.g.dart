@@ -30,8 +30,20 @@ class $TaskTableTable extends TaskTable
   late final GeneratedColumn<String> answer = GeneratedColumn<String>(
       'answer', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _datetimeMeta =
+      const VerificationMeta('datetime');
   @override
-  List<GeneratedColumn> get $columns => [id, formula, task, answer];
+  late final GeneratedColumn<String> datetime = GeneratedColumn<String>(
+      'datetime', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+      'type', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, formula, task, answer, datetime, type];
   @override
   String get aliasedName => _alias ?? 'task_table';
   @override
@@ -64,6 +76,18 @@ class $TaskTableTable extends TaskTable
     } else if (isInserting) {
       context.missing(_answerMeta);
     }
+    if (data.containsKey('datetime')) {
+      context.handle(_datetimeMeta,
+          datetime.isAcceptableOrUnknown(data['datetime']!, _datetimeMeta));
+    } else if (isInserting) {
+      context.missing(_datetimeMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
     return context;
   }
 
@@ -81,6 +105,10 @@ class $TaskTableTable extends TaskTable
           .read(DriftSqlType.string, data['${effectivePrefix}task'])!,
       answer: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}answer'])!,
+      datetime: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}datetime'])!,
+      type: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!,
     );
   }
 
@@ -95,11 +123,15 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
   final String formula;
   final String task;
   final String answer;
+  final String datetime;
+  final String type;
   const TaskTableData(
       {required this.id,
       required this.formula,
       required this.task,
-      required this.answer});
+      required this.answer,
+      required this.datetime,
+      required this.type});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -107,6 +139,8 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
     map['formula'] = Variable<String>(formula);
     map['task'] = Variable<String>(task);
     map['answer'] = Variable<String>(answer);
+    map['datetime'] = Variable<String>(datetime);
+    map['type'] = Variable<String>(type);
     return map;
   }
 
@@ -116,6 +150,8 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       formula: Value(formula),
       task: Value(task),
       answer: Value(answer),
+      datetime: Value(datetime),
+      type: Value(type),
     );
   }
 
@@ -127,6 +163,8 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       formula: serializer.fromJson<String>(json['formula']),
       task: serializer.fromJson<String>(json['task']),
       answer: serializer.fromJson<String>(json['answer']),
+      datetime: serializer.fromJson<String>(json['datetime']),
+      type: serializer.fromJson<String>(json['type']),
     );
   }
   @override
@@ -137,16 +175,25 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       'formula': serializer.toJson<String>(formula),
       'task': serializer.toJson<String>(task),
       'answer': serializer.toJson<String>(answer),
+      'datetime': serializer.toJson<String>(datetime),
+      'type': serializer.toJson<String>(type),
     };
   }
 
   TaskTableData copyWith(
-          {String? id, String? formula, String? task, String? answer}) =>
+          {String? id,
+          String? formula,
+          String? task,
+          String? answer,
+          String? datetime,
+          String? type}) =>
       TaskTableData(
         id: id ?? this.id,
         formula: formula ?? this.formula,
         task: task ?? this.task,
         answer: answer ?? this.answer,
+        datetime: datetime ?? this.datetime,
+        type: type ?? this.type,
       );
   @override
   String toString() {
@@ -154,13 +201,15 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           ..write('id: $id, ')
           ..write('formula: $formula, ')
           ..write('task: $task, ')
-          ..write('answer: $answer')
+          ..write('answer: $answer, ')
+          ..write('datetime: $datetime, ')
+          ..write('type: $type')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, formula, task, answer);
+  int get hashCode => Object.hash(id, formula, task, answer, datetime, type);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -168,7 +217,9 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           other.id == this.id &&
           other.formula == this.formula &&
           other.task == this.task &&
-          other.answer == this.answer);
+          other.answer == this.answer &&
+          other.datetime == this.datetime &&
+          other.type == this.type);
 }
 
 class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
@@ -176,32 +227,44 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
   final Value<String> formula;
   final Value<String> task;
   final Value<String> answer;
+  final Value<String> datetime;
+  final Value<String> type;
   const TaskTableCompanion({
     this.id = const Value.absent(),
     this.formula = const Value.absent(),
     this.task = const Value.absent(),
     this.answer = const Value.absent(),
+    this.datetime = const Value.absent(),
+    this.type = const Value.absent(),
   });
   TaskTableCompanion.insert({
     required String id,
     required String formula,
     required String task,
     required String answer,
+    required String datetime,
+    required String type,
   })  : id = Value(id),
         formula = Value(formula),
         task = Value(task),
-        answer = Value(answer);
+        answer = Value(answer),
+        datetime = Value(datetime),
+        type = Value(type);
   static Insertable<TaskTableData> custom({
     Expression<String>? id,
     Expression<String>? formula,
     Expression<String>? task,
     Expression<String>? answer,
+    Expression<String>? datetime,
+    Expression<String>? type,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (formula != null) 'formula': formula,
       if (task != null) 'task': task,
       if (answer != null) 'answer': answer,
+      if (datetime != null) 'datetime': datetime,
+      if (type != null) 'type': type,
     });
   }
 
@@ -209,12 +272,16 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
       {Value<String>? id,
       Value<String>? formula,
       Value<String>? task,
-      Value<String>? answer}) {
+      Value<String>? answer,
+      Value<String>? datetime,
+      Value<String>? type}) {
     return TaskTableCompanion(
       id: id ?? this.id,
       formula: formula ?? this.formula,
       task: task ?? this.task,
       answer: answer ?? this.answer,
+      datetime: datetime ?? this.datetime,
+      type: type ?? this.type,
     );
   }
 
@@ -233,6 +300,12 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     if (answer.present) {
       map['answer'] = Variable<String>(answer.value);
     }
+    if (datetime.present) {
+      map['datetime'] = Variable<String>(datetime.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
     return map;
   }
 
@@ -242,7 +315,9 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
           ..write('id: $id, ')
           ..write('formula: $formula, ')
           ..write('task: $task, ')
-          ..write('answer: $answer')
+          ..write('answer: $answer, ')
+          ..write('datetime: $datetime, ')
+          ..write('type: $type')
           ..write(')'))
         .toString();
   }

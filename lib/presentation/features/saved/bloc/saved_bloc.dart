@@ -53,6 +53,8 @@ class SavedBloc extends Bloc<SavedEvent, SavedState> {
               formula: event.model.formula,
               task: event.model.task,
               answer: event.model.answer,
+              datetime: event.model.datetime,
+              type: event.model.type,
             ),
           ),
         ),
