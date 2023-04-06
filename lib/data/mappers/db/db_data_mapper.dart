@@ -21,12 +21,12 @@ extension DomainToTaskTableData on AbstractTask {
 extension TaskTableDataToDomain on TaskTableData {
   AbstractTask toDomain() {
     return BaseTask(
-      id: id,
-      formula: formula,
-      task: task,
-      answer: answer,
-      datetime: datetime,
-      type: type,
+      id,
+      formula,
+      task,
+      answer,
+      datetime,
+      type,
     );
   }
 }
@@ -44,33 +44,33 @@ extension AbstractTaskToTaskCardModel on AbstractTask {
 
 extension TaskCardModelToDomain on TaskCardModel {
   AbstractTask toDomain() => BaseTask(
-        id: id,
-        task: task,
-        answer: answer,
-        formula: formula,
-        datetime: datetime,
-        type: type,
+        id,
+        formula,
+        task,
+        answer,
+        datetime,
+        type,
       );
 }
 
 extension SavedCardModelToDomain on SavedCardModel {
   AbstractTask toDomain() => BaseTask(
-        id: id,
-        task: task,
-        answer: answer,
-        formula: formula,
-        datetime: datetime,
-        type: type,
+        id,
+        formula,
+        task,
+        answer,
+        datetime,
+        type,
       );
 }
 
 extension FavouriteCardModelToDomain on FavouriteCardModel {
   AbstractTask toDomain() => BaseTask(
-        id: id,
-        task: task,
-        answer: answer,
-        formula: formula,
-        datetime: datetime,
-        type: type,
+        id,
+        formula,
+        task,
+        answer,
+        datetime,
+        type,
       );
 }

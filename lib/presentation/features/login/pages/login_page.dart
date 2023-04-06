@@ -22,13 +22,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late bool isLoading;
-
-  @override
-  void initState() {
-    isLoading = false;
-    super.initState();
-  }
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +32,6 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Visibility(
-              visible: isLoading,
-              child: CircularProgressIndicator(),
-            ),
             const SizedBox(
               height: 48,
             ),
@@ -106,9 +96,11 @@ class _LoginPageState extends State<LoginPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                isLoading = true;
                 if (widget._formKey.currentState!.validate()) {
                   widget._formKey.currentState!.save();
+                  setState(() {
+                    isLoading = true;
+                  });
                   context.read<LoginBloc>().add(SendDataEvent());
                   Future.delayed(const Duration(seconds: 1), () async {
                     if (await Datastore.isTokenPresent()) {
@@ -119,7 +111,6 @@ class _LoginPageState extends State<LoginPage> {
                                     (Route<dynamic> route) => false),
                               });
                     }
-                    // isLoading = false;
                   });
                 }
               },
@@ -143,12 +134,20 @@ class _LoginPageState extends State<LoginPage> {
                     context.locale.intro.loginBtnText,
                     style: const TextStyle(color: Colors.white),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 8.0),
-                    child: Icon(
-                      Icons.login_rounded,
-                      color: Colors.white,
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: isLoading == false
+                        ? const Icon(
+                            Icons.login_rounded,
+                            color: Colors.white,
+                          )
+                        : const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          ),
                   ),
                 ],
               ),

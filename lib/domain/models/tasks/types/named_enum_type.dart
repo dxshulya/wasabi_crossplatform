@@ -7,8 +7,6 @@ extension NamedEnumType on EnumType {
         return 'Mass';
       case EnumType.energy:
         return 'Energy';
-      case EnumType.unknown:
-        return 'unknown';
     }
   }
 }
@@ -21,7 +19,7 @@ extension EnumTypeString on String {
       case 'Energy':
         return EnumType.energy;
       default:
-        return EnumType.unknown;
+        return EnumType.mass;
     }
   }
 }

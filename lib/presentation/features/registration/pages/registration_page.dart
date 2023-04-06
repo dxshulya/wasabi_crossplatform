@@ -23,6 +23,8 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,6 +101,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 onPressed: () {
                   if (widget._formKey.currentState!.validate()) {
                     widget._formKey.currentState!.save();
+                    setState(() {
+                      isLoading = true;
+                    });
                     context.read<RegistrationBloc>().add(SendDataEvent());
                     Future.delayed(const Duration(seconds: 1), () async {
                       if (await Datastore.isTokenPresent()) {
@@ -132,12 +137,20 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       context.locale.intro.regBtnText,
                       style: const TextStyle(color: Colors.white),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Icon(
-                        Icons.app_registration,
-                        color: Colors.white,
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: isLoading == false
+                          ? const Icon(
+                              Icons.account_box_rounded,
+                              color: Colors.white,
+                            )
+                          : const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ),
                     ),
                   ],
                 )),

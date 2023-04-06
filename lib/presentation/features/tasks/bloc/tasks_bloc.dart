@@ -62,12 +62,12 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
         state.copyWith(
           likeData: _repository.savedTask(
             BaseTask(
-              id: event.model.id,
-              formula: event.model.formula,
-              task: event.model.task,
-              answer: event.model.answer,
-              datetime: event.model.datetime,
-              type: event.model.type,
+              event.model.id,
+              event.model.formula,
+              event.model.task,
+              event.model.answer,
+              event.model.datetime,
+              event.model.type,
             ),
           ),
         ),

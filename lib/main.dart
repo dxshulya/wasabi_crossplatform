@@ -18,6 +18,7 @@ import 'package:wasabi_crossplatform/domain/repositories/saved/abstract_saved_re
 import 'package:wasabi_crossplatform/domain/repositories/tasks/abstract_tasks_repository.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/pages/favourites_page.dart';
+import 'package:wasabi_crossplatform/presentation/features/filtering/filters/bloc/filters_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/intro/pages/intro_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/pages/login_page.dart';
@@ -29,6 +30,7 @@ import 'package:wasabi_crossplatform/presentation/features/saved/pages/saved_pag
 import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/pages/settings_page.dart';
+import 'package:wasabi_crossplatform/presentation/features/sorting/bloc/sorting_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/splash/pages/splash_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/pages/tasks_page.dart';
@@ -65,6 +67,10 @@ class MyApp extends StatelessWidget {
             create: (context) => SettingsBloc(
                 context.read<LocaleBloc>(), context.read<FavouritesBloc>())
               ..init(),
+          ),
+          BlocProvider<FiltersBloc>(
+            lazy: false,
+            create: (_) => FiltersBloc(),
           ),
         ],
         child: BlocBuilder<SettingsBloc, SettingsState>(
@@ -207,13 +213,19 @@ class MyApp extends StatelessWidget {
                                 },
                               ),
                             ),
-                            child: BlocProvider<TasksBloc>(
+                            child: BlocProvider<SortingBloc>(
                               lazy: false,
-                              create: (context) => TasksBloc(
-                                repository:
-                                    context.read<AbstractTasksRepository>(),
+                              create: (context) => SortingBloc(
+                                sortByReverse: false,
                               ),
-                              child: const TasksPage(),
+                              child: BlocProvider<TasksBloc>(
+                                lazy: false,
+                                create: (context) => TasksBloc(
+                                  repository:
+                                      context.read<AbstractTasksRepository>(),
+                                ),
+                                child: const TasksPage(),
+                              ),
                             ),
                           ),
                         );

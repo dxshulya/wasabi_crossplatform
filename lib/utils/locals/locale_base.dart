@@ -144,4 +144,6 @@ abstract class FiltersLocaleBase {
   String get byTask;
 
   String get byType;
+
+  String get title;
 }

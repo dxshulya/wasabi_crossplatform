@@ -213,4 +213,7 @@ class FiltersLocalEn implements FiltersLocaleBase {
   @override
   String get byType => 'By type';
 
+  @override
+  String get title => 'Filters';
+
 }

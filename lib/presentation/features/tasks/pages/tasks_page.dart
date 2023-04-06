@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wasabi_crossplatform/data/mappers/db/db_data_mapper.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_tasks.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_total_count.dart';
 import 'package:wasabi_crossplatform/presentation/common/empty.dart';
@@ -9,13 +8,14 @@ import 'package:wasabi_crossplatform/presentation/common/error.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_state.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/pages/favourites_page.dart';
-import 'package:wasabi_crossplatform/presentation/features/filtering_and_sorting/widgets/modal_bottom_sheet.dart';
+import 'package:wasabi_crossplatform/presentation/features/filtering/bloc/filtering_bloc.dart';
+import 'package:wasabi_crossplatform/presentation/features/filtering/widgets/filtered_container.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/pages/saved_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/pages/settings_page.dart';
+import 'package:wasabi_crossplatform/presentation/features/sorting/widgets/sorter_switcher.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_state.dart';
-import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/task_card.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
 
@@ -43,22 +43,9 @@ class _TasksPageState extends State<TasksPage> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.filter_list_off_outlined),
-        ),
+        leading: const SorterSwitcher(),
         title: Text(context.locale.tasks.title),
         actions: [
-          IconButton(
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  builder: (ctx) {
-                    return const ModalBottomSheet();
-                  });
-            },
-            icon: const Icon(Icons.filter_alt_rounded),
-          ),
           BlocBuilder<TasksBloc, TasksState>(
             builder: (context, state) => IconButton(
               onPressed: () {
@@ -75,7 +62,7 @@ class _TasksPageState extends State<TasksPage> {
                     backgroundColor: AppColors.brandGreenColor,
                     label: Text(data.data?.totalCount.toString() ?? '0'),
                     isLabelVisible:
-                    (data.data?.totalCount ?? 0) < 1 ? false : true,
+                        (data.data?.totalCount ?? 0) < 1 ? false : true,
                     child: const Icon(Icons.save_rounded),
                   );
                 },
@@ -127,22 +114,12 @@ class _TasksPageState extends State<TasksPage> {
                           child: Center(child: CircularProgressIndicator()))
                       : data.hasData
                           ? data.data?.tasks.isNotEmpty == true
-                              ? ListView.builder(
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    final model = data.data?.tasks[index]
-                                        .toTaskCardModel();
-
-                                    if (model != null) {
-                                      return TaskCard(
-                                        index: index + 1,
-                                        model: model,
-                                      );
-                                    }
-
-                                    return const ErrorHelper();
-                                  },
-                                  itemCount: data.data?.tasks.length ?? 0,
+                              ? BlocProvider<FilteringBloc>(
+                                  lazy: false,
+                                  create: (context) => FilteringBloc(
+                                    sourceTasks: data.data?.tasks ?? [],
+                                  ),
+                                  child: const FilteredContainer(),
                                 )
                               : const EmptyHelper()
                           : const ErrorHelper();

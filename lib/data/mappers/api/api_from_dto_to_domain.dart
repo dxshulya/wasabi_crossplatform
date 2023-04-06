@@ -23,12 +23,12 @@ import 'package:wasabi_crossplatform/domain/models/tasks/abstract_total_count.da
 extension TaskFromDTOToDomain on TaskDTO {
   AbstractTask toDomain() {
     return BaseTask(
-      id: id,
-      formula: formula,
-      task: task,
-      answer: answer,
-      datetime: datetime,
-      type: type,
+      id,
+      formula,
+      task,
+      answer,
+      datetime,
+      type,
     );
   }
 }
