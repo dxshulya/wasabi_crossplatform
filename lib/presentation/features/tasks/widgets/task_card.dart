@@ -59,10 +59,6 @@ class TaskCard extends StatelessWidget {
           const SizedBox(
             height: 8,
           ),
-          Text(_model.type),
-          const SizedBox(
-            height: 8,
-          ),
           ListTileTheme(
             contentPadding:
                 const EdgeInsets.only(top: 0, left: 0, right: 16, bottom: 0),

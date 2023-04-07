@@ -41,7 +41,6 @@ class _FilteredContainerState extends State<FilteredContainer> {
                   });
             },
             style: ElevatedButton.styleFrom(
-              elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(0),
               ),

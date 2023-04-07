@@ -4,9 +4,9 @@ extension NamedEnumType on EnumType {
   String typeToString() {
     switch (this) {
       case EnumType.mass:
-        return 'Mass';
+        return 'Масса';
       case EnumType.energy:
-        return 'Energy';
+        return 'Энергия';
     }
   }
 }
@@ -14,9 +14,9 @@ extension NamedEnumType on EnumType {
 extension EnumTypeString on String {
   EnumType fromTypeString() {
     switch (this) {
-      case 'Mass':
+      case 'Масса':
         return EnumType.mass;
-      case 'Energy':
+      case 'Энергия':
         return EnumType.energy;
       default:
         return EnumType.mass;

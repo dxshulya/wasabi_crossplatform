@@ -5,9 +5,9 @@ mixin EnumTypeFromString {
 
   EnumType stringToEnumType() {
     switch (type) {
-      case 'Energy':
+      case 'Энергия':
         return EnumType.energy;
-      case 'Mass':
+      case 'Масса':
         return EnumType.mass;
       default:
         return EnumType.mass;

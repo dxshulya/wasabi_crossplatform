@@ -1,13 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:wasabi_crossplatform/domain/models/auth/abstract_message.dart';
+import 'package:wasabi_crossplatform/domain/models/tasks/abstract_task.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_tasks.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_total_count.dart';
 
-enum TaskStatus { initial, success, failure }
-
 class TasksState extends Equatable {
   final Future<AbstractTasks>? data;
-  final Future<AbstractTasks>? fetchedData;
+  final List<AbstractTask>? fetchedData;
   final Future<AbstractMessage>? likeData;
   final Future<AbstractTotalCount>? totalCount;
   final Stream<AbstractTotalCount>? totalCountStream;
@@ -30,7 +29,7 @@ class TasksState extends Equatable {
 
   TasksState copyWith({
     Future<AbstractTasks>? data,
-    Future<AbstractTasks>? fetchedData,
+    List<AbstractTask>? fetchedData,
     Future<AbstractMessage>? likeData,
     Future<AbstractTotalCount>? totalCount,
     Stream<AbstractTotalCount>? totalCountStream,
