@@ -10,7 +10,7 @@ class TasksState extends Equatable {
   final Future<AbstractMessage>? likeData;
   final Future<AbstractTotalCount>? totalCount;
   final Stream<AbstractTotalCount>? totalCountStream;
-  final int? page;
+  final int page;
   final int? count;
   List<String> tasksSavedIds;
   List<String> tasksExpandedIds;
@@ -18,7 +18,7 @@ class TasksState extends Equatable {
   TasksState({
     this.data,
     this.fetchedData,
-    this.page,
+    this.page = 1,
     this.likeData,
     this.totalCount,
     this.totalCountStream,
@@ -53,7 +53,7 @@ class TasksState extends Equatable {
   @override
   List<Object> get props => [
         data ?? 0,
-        page ?? 1,
+        page,
         likeData ?? 0,
         totalCount ?? 0,
         totalCountStream ?? 0,

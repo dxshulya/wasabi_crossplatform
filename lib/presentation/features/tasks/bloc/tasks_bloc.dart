@@ -13,7 +13,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   TasksBloc({
     required AbstractTasksRepository repository,
   })  : _repository = repository,
-        super(TasksState(page: 1, tasksSavedIds: [], tasksExpandedIds: [])) {
+        super(TasksState(tasksSavedIds: [], tasksExpandedIds: [])) {
     on<LoadDataEvent>(_onLoadData);
     on<ChangedLikedEvent>(_onChangedLiked);
     on<TotalCountEvent>(_onTotalCountData);
@@ -27,7 +27,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       state.copyWith(
         page: state.page,
         data: _repository.fetchTasks(
-          page: state.page ?? 1,
+          page: state.page,
         ),
       ),
     );
