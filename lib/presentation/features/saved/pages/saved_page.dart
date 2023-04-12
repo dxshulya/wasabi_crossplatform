@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wasabi_crossplatform/domain/models/saved/abstract_saves.dart';
 import 'package:wasabi_crossplatform/presentation/common/empty.dart';
 import 'package:wasabi_crossplatform/presentation/common/error.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_bloc.dart';
@@ -21,12 +21,29 @@ class SavedPage extends StatefulWidget {
 }
 
 class _SavedPageState extends State<SavedPage> {
-  ScrollController? _scrollController;
+  late final ScrollController _scrollController;
 
   @override
   void didChangeDependencies() {
-    context.read<SavedBloc>().add(LoadDataEvent());
     super.didChangeDependencies();
+    _scrollController = ScrollController()..addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+    if (currentScroll == maxScroll) {
+      context.read<SavedBloc>().add(const SavedFetch());
+    }
   }
 
   @override
@@ -46,62 +63,51 @@ class _SavedPageState extends State<SavedPage> {
           ),
         ],
       ),
-      body: BlocBuilder<SavedBloc, SavedState>(
-        buildWhen: (oldState, newState) => oldState.data != newState.data,
-        builder: (context, state) {
-          return RefreshIndicator(
-              onRefresh: _onRefresh,
-              child: Builder(builder: (context) {
-                _scrollController ??= PrimaryScrollController.of(context)
-                  ..addListener(_pagination);
-                return FutureBuilder<AbstractSaves>(
-                  future: state.data,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<AbstractSaves?> data) {
-                    return data.connectionState != ConnectionState.done
-                        ? const Center(
-                            child: Center(child: CircularProgressIndicator()))
-                        : data.hasData
-                            ? data.data?.saves.isNotEmpty == true
-                                ? ListView.builder(
-                                    controller: _scrollController,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      final model = data.data?.saves[index]
-                                          .toSavedCardModel();
+      body: BlocBuilder<SavedBloc, SavedState>(builder: (context, state) {
+        return state.status == SavedStatus.initial
+            ? const Center(child: Center(child: CircularProgressIndicator()))
+            : state.status == SavedStatus.success
+                ? state.data.saves.isNotEmpty == true
+                    ? RefreshIndicator(
+                        onRefresh: () async {
+                          context.read<SavedBloc>().add(const SavedRefresh());
+                        },
+                        child: ListView.builder(
+                          controller: _scrollController,
+                          itemBuilder: (BuildContext context, int index) {
+                            final model =
+                                state.data.saves[index].toSavedCardModel();
 
-                                      if (model != null) {
-                                        return SavedCard(
-                                          index: index + 1,
-                                          model: model,
-                                        );
-                                      }
+                            if (model.id.isNotEmpty) {
+                              return SavedCard(
+                                index: index + 1,
+                                model: model,
+                              );
+                            }
 
-                                      return const ErrorHelper();
-                                    },
-                                    itemCount: data.data?.saves.length ?? 0,
-                                  )
-                                : const EmptyHelper()
-                            : const ErrorHelper();
-                  },
-                );
-              }));
-        },
-      ),
+                            return const ErrorHelper();
+                          },
+                          itemCount: state.data.saves.length,
+                        ),
+                      )
+                    : const EmptyHelper()
+                : const ErrorHelper();
+      }),
+      floatingActionButton: FloatingActionButton(
+          child: const RotatedBox(
+            quarterTurns: 1,
+            child: Icon(
+              Icons.arrow_back_rounded,
+            ),
+          ),
+          onPressed: () {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              _scrollController.animateTo(
+                  _scrollController.position.minScrollExtent ?? 0,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.fastOutSlowIn);
+            });
+          }),
     );
-  }
-
-  Future<void> _onRefresh() async {
-    context.read<SavedBloc>().add(LoadDataEvent());
-  }
-
-  static const int _paginationOffset = 200;
-
-  void _pagination() {
-    if (((_scrollController?.position.pixels ?? 0) >=
-        (_scrollController?.position.maxScrollExtent ??
-            0 - _paginationOffset))) {
-      context.read<SavedBloc>().add(NextPageLoadEvent());
-    }
   }
 }

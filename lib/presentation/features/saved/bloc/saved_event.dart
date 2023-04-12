@@ -17,14 +17,17 @@ class PageChangedEvent extends SavedEvent {
   List<Object> get props => [page];
 }
 
-class NextPageLoadEvent extends SavedEvent {}
-
-class PrevPageLoadEvent extends SavedEvent {}
-
-class LoadDataEvent extends SavedEvent {}
-
 class ChangedLikedEvent extends SavedEvent {
   final AbstractTask model;
 
   const ChangedLikedEvent({required this.model});
+}
+
+
+class SavedFetch extends SavedEvent {
+  const SavedFetch();
+}
+
+class SavedRefresh extends SavedEvent {
+  const SavedRefresh();
 }

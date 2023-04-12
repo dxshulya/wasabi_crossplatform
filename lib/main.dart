@@ -26,6 +26,7 @@ import 'package:wasabi_crossplatform/presentation/features/not_found/pages/not_f
 import 'package:wasabi_crossplatform/presentation/features/registration/bloc/registration_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/registration/pages/registration_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_bloc.dart';
+import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/pages/saved_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/settings/bloc/settings_state.dart';
@@ -260,7 +261,7 @@ class MyApp extends StatelessWidget {
                               create: (context) => SavedBloc(
                                 repository:
                                     context.read<AbstractSavedRepository>(),
-                              ),
+                              )..add(const SavedFetch()),
                               child: const SavedPage(),
                             ),
                           ),
