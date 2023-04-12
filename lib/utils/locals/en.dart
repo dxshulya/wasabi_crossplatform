@@ -147,13 +147,13 @@ class SettingsLocalEn implements SettingsLocaleBase {
   String get title => 'Settings';
 
   @override
-  String get darkThemeMode => 'Dark Theme Mode';
+  String get darkThemeMode => 'Dark theme';
 
   @override
   String get email => 'Email: ';
 
   @override
-  String get lightThemeMode => 'Light Theme Mode';
+  String get lightThemeMode => 'Light theme';
 
   @override
   String get name => 'Name: ';
@@ -162,7 +162,7 @@ class SettingsLocalEn implements SettingsLocaleBase {
   String get switchLanguage => 'Switch Language';
 
   @override
-  String get systemThemeMode => 'System Theme Mode';
+  String get systemThemeMode => 'System theme';
 
   @override
   String get language => 'Language';
