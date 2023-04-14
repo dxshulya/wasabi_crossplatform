@@ -113,6 +113,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                       TasksPage.navigationPath,
                                       (Route<dynamic> route) => false),
                                 });
+                      } else {
+                        setState(() {
+                          isLoading = false;
+                        });
                       }
                     });
                   }

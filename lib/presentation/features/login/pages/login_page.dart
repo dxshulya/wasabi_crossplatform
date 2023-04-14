@@ -111,6 +111,11 @@ class _LoginPageState extends State<LoginPage> {
                                     (Route<dynamic> route) => false),
                               });
                     }
+                    else {
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
                   });
                 }
               },
