@@ -10,7 +10,6 @@ import 'package:wasabi_crossplatform/data/dtos/api/api_tasks_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_total_count_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_user_dto.dart';
 import 'package:wasabi_crossplatform/data/repositories/interceptors/api_error_interceptor.dart';
-import 'package:wasabi_crossplatform/utils/datastore/datastore.dart';
 import 'package:wasabi_crossplatform/utils/keys.dart';
 
 class ApiService {

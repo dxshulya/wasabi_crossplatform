@@ -14,19 +14,16 @@ import 'package:wasabi_crossplatform/utils/theme_mode_ext.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final LocaleBloc _localeBloc;
-
-  // final LoginBloc _loginBloc;
   final FavouritesBloc _favouritesBloc;
 
   SettingsBloc(LocaleBloc localeBloc, FavouritesBloc favouritesBloc)
       : _localeBloc = localeBloc,
-        // _loginBloc = loginBloc,
         _favouritesBloc = favouritesBloc,
         super(const SettingsState(
             email: '',
             name: '',
             isRuLocale: true,
-            themeMode: ThemeMode.light)) {
+            themeMode: ThemeMode.system)) {
     on<LoadNameEvent>(_onLoadName);
     on<ClearNameEvent>(_onClearName);
     on<LoadEmailEvent>(_onLoadEmail);
@@ -102,7 +99,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     Datastore.removeName();
     Datastore.removePassword();
     Datastore.removeToken();
-    // _loginBloc.add();
     _favouritesBloc.add(ClearFavourites());
     emit(state.copyWith(
       email: '',

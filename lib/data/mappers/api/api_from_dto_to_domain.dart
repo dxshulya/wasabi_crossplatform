@@ -44,7 +44,6 @@ extension TotalCountFromDTOToDomain on TotalCountDTO {
 extension TasksFromDTOToDomain on TasksDTO {
   AbstractTasks toDomain() {
     return BaseTasks(
-      totalCount: totalCount,
       tasks: tasks.map((a) => a.toDomain()).toList(),
     );
   }
