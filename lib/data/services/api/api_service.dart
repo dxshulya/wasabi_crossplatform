@@ -10,6 +10,7 @@ import 'package:wasabi_crossplatform/data/dtos/api/api_tasks_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_total_count_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_user_dto.dart';
 import 'package:wasabi_crossplatform/data/repositories/interceptors/api_error_interceptor.dart';
+import 'package:wasabi_crossplatform/utils/api.dart';
 import 'package:wasabi_crossplatform/utils/keys.dart';
 
 class ApiService {
@@ -25,60 +26,58 @@ class ApiService {
 
   final Function(String, String, String) _onErrorHandler;
 
-  static const _baseURL = 'http://10.0.2.2:5000';
-
   ApiService({required Function(String, String, String) onErrorHandler})
       : _onErrorHandler = onErrorHandler;
 
   Future<TasksDTO> loadTasks({int page = 1}) async {
-    String url = '$_baseURL/tasks/createArrayTasks';
+    String url = "${Api.baseURL}${Api.getTasksQuery}";
     final sharedPreference = await SharedPreferences.getInstance();
     final String? token = sharedPreference.getString(Keys.userToken);
     final Response<dynamic> response = await _dio.get<dynamic>(
       url,
       options: Options(
-        headers: {"Authorization": "Bearer $token"},
+        headers: {Api.headerAuth: "${Api.headerBearer} $token"},
       ),
       queryParameters: <String, dynamic>{
-        'page': page,
-        'count': 10,
+        Api.pageParameter: page,
+        Api.countParameter: 10,
       },
     );
     return TasksDTO.fromJson(response.data);
   }
 
   Future<TotalCountDTO> loadTotalCount() async {
-    String url = '$_baseURL/favourites/getTotalCountFavourites';
+    String url = "${Api.baseURL}${Api.getTotalCountQuery}";
     final sharedPreference = await SharedPreferences.getInstance();
     final String? token = sharedPreference.getString(Keys.userToken);
     final Response<dynamic> response = await _dio.get<dynamic>(
       url,
       options: Options(
-        headers: {"Authorization": "Bearer $token"},
+        headers: {Api.headerAuth: "${Api.headerBearer} $token"},
       ),
     );
     return TotalCountDTO.fromJson(response.data);
   }
 
   Future<FavouritesDTO> loadFavourites({int page = 1}) async {
-    String url = '$_baseURL/favourites/getAllFavourites';
+    String url = "${Api.baseURL}${Api.getFavouritesQuery}";
     final sharedPreference = await SharedPreferences.getInstance();
     final String? token = sharedPreference.getString(Keys.userToken);
     final Response<dynamic> response = await _dio.get<dynamic>(
       url,
       options: Options(
-        headers: {"Authorization": "Bearer $token"},
+        headers: {Api.headerAuth: "${Api.headerBearer} $token"},
       ),
       queryParameters: <String, dynamic>{
-        'page': page,
-        'count': 10,
+        Api.pageParameter: page,
+        Api.countParameter: 10,
       },
     );
     return FavouritesDTO.fromJson(response.data);
   }
 
   Future<LoginDTO> postLogin({required UserDTO user}) async {
-    String url = '$_baseURL/auth/login';
+    String url = "${Api.baseURL}${Api.postLoginQuery}";
     final Response<dynamic> response = await _dio.post<dynamic>(
       url,
       data: user.toJson(),
@@ -87,7 +86,7 @@ class ApiService {
   }
 
   Future<RegistrationDTO> postRegistration({required UserDTO user}) async {
-    String url = '$_baseURL/auth/registration';
+    String url = "${Api.baseURL}${Api.postRegistrationQuery}";
     final Response<dynamic> response = await _dio.post<dynamic>(
       url,
       data: user.toJson(),
@@ -96,13 +95,13 @@ class ApiService {
   }
 
   Future<MessageDTO> postFavourite({required TaskDTO task}) async {
-    String url = '$_baseURL/favourites/addedFavourites';
+    String url = "${Api.baseURL}${Api.postFavouriteQuery}";
     final sharedPreference = await SharedPreferences.getInstance();
     final String? token = sharedPreference.getString(Keys.userToken);
     final Response<dynamic> response = await _dio.post<dynamic>(
       url,
       options: Options(
-        headers: {"Authorization": "Bearer $token"},
+        headers: {Api.headerAuth: "${Api.headerBearer} $token"},
       ),
       data: task.toJson(),
     );
@@ -110,16 +109,16 @@ class ApiService {
   }
 
   Future<MessageDTO> deleteFavourite({required String id}) async {
-    String url = '$_baseURL/favourites/deleteFavourites';
+    String url = "${Api.baseURL}${Api.deleteFavouriteQuery}";
     final sharedPreference = await SharedPreferences.getInstance();
     final String? token = sharedPreference.getString(Keys.userToken);
     final Response<dynamic> response = await _dio.delete<dynamic>(
       url,
       options: Options(
-        headers: {"Authorization": "Bearer $token"},
+        headers: {Api.headerAuth: "${Api.headerBearer} $token"},
       ),
       queryParameters: <String, dynamic>{
-        'id': id,
+        Api.idParameter: id,
       },
     );
     return MessageDTO.fromJson(response.data);
