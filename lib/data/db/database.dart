@@ -22,11 +22,4 @@ class Database extends _$Database {
       return NativeDatabase(file);
     });
   }
-
-  Future<int?> tasksCount() async {
-    var countExp = taskTable.id.count();
-    final query = selectOnly(taskTable)..addColumns([countExp]);
-    var result = await query.map((row) => row.read(countExp)).getSingle();
-    return result;
-  }
 }
