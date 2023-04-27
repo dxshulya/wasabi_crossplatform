@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wasabi_crossplatform/data/models/base_task.dart';
+import 'package:wasabi_crossplatform/domain/models/base_task.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_total_count.dart';
 import 'package:wasabi_crossplatform/domain/repositories/tasks/abstract_tasks_repository.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_event.dart';

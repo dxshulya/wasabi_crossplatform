@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wasabi_crossplatform/data/models/base_saved.dart';
-import 'package:wasabi_crossplatform/data/models/base_task.dart';
+import 'package:wasabi_crossplatform/domain/models/base_saved.dart';
+import 'package:wasabi_crossplatform/domain/models/base_task.dart';
 import 'package:wasabi_crossplatform/domain/repositories/saved/abstract_saved_repository.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_state.dart';

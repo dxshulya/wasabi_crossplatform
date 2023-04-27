@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:wasabi_crossplatform/data/models/base_saved.dart';
 import 'package:wasabi_crossplatform/domain/models/auth/abstract_message.dart';
+import 'package:wasabi_crossplatform/domain/models/base_saved.dart';
 import 'package:wasabi_crossplatform/domain/models/saved/abstract_saves.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_total_count.dart';
 
