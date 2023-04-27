@@ -10,10 +10,11 @@ import 'package:wasabi_crossplatform/data/dtos/api/api_tasks_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_total_count_dto.dart';
 import 'package:wasabi_crossplatform/data/dtos/api/api_user_dto.dart';
 import 'package:wasabi_crossplatform/data/repositories/interceptors/api_error_interceptor.dart';
+import 'package:wasabi_crossplatform/domain/services/api/abstract_api_service.dart';
 import 'package:wasabi_crossplatform/utils/api.dart';
 import 'package:wasabi_crossplatform/utils/keys.dart';
 
-class ApiService {
+class ApiService implements AbstractApiService {
   late final Dio _dio = Dio()
     ..interceptors.addAll([
       PrettyDioLogger(
@@ -29,6 +30,7 @@ class ApiService {
   ApiService({required Function(String, String, String) onErrorHandler})
       : _onErrorHandler = onErrorHandler;
 
+  @override
   Future<TasksDTO> loadTasks({int page = 1}) async {
     String url = "${Api.baseURL}${Api.getTasksQuery}";
     final sharedPreference = await SharedPreferences.getInstance();
@@ -46,6 +48,7 @@ class ApiService {
     return TasksDTO.fromJson(response.data);
   }
 
+  @override
   Future<TotalCountDTO> loadTotalCount() async {
     String url = "${Api.baseURL}${Api.getTotalCountQuery}";
     final sharedPreference = await SharedPreferences.getInstance();
@@ -59,6 +62,7 @@ class ApiService {
     return TotalCountDTO.fromJson(response.data);
   }
 
+  @override
   Future<FavouritesDTO> loadFavourites({int page = 1}) async {
     String url = "${Api.baseURL}${Api.getFavouritesQuery}";
     final sharedPreference = await SharedPreferences.getInstance();
@@ -76,6 +80,7 @@ class ApiService {
     return FavouritesDTO.fromJson(response.data);
   }
 
+  @override
   Future<LoginDTO> postLogin({required UserDTO user}) async {
     String url = "${Api.baseURL}${Api.postLoginQuery}";
     final Response<dynamic> response = await _dio.post<dynamic>(
@@ -85,6 +90,7 @@ class ApiService {
     return LoginDTO.fromJson(response.data);
   }
 
+  @override
   Future<RegistrationDTO> postRegistration({required UserDTO user}) async {
     String url = "${Api.baseURL}${Api.postRegistrationQuery}";
     final Response<dynamic> response = await _dio.post<dynamic>(
@@ -94,6 +100,7 @@ class ApiService {
     return RegistrationDTO.fromJson(response.data);
   }
 
+  @override
   Future<MessageDTO> postFavourite({required TaskDTO task}) async {
     String url = "${Api.baseURL}${Api.postFavouriteQuery}";
     final sharedPreference = await SharedPreferences.getInstance();
@@ -108,6 +115,7 @@ class ApiService {
     return MessageDTO.fromJson(response.data);
   }
 
+  @override
   Future<MessageDTO> deleteFavourite({required String id}) async {
     String url = "${Api.baseURL}${Api.deleteFavouriteQuery}";
     final sharedPreference = await SharedPreferences.getInstance();
