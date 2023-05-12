@@ -34,6 +34,7 @@ import 'package:wasabi_crossplatform/presentation/features/settings/pages/settin
 import 'package:wasabi_crossplatform/presentation/features/sorting/bloc/sorting_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/splash/pages/splash_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/bloc/tasks_bloc.dart';
+import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/tasks_list.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/pages/tasks_page.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 import 'package:wasabi_crossplatform/utils/locals/locals.dart';
@@ -114,35 +115,7 @@ class MyApp extends StatelessWidget {
                   if (settings.name == LoginPage.navigationPath) {
                     return MaterialPageRoute(
                       builder: (_) {
-                        return BlocProvider<ErrorBloc>(
-                          lazy: false,
-                          create: (context) => ErrorBloc(context: context),
-                          child: RepositoryProvider<AbstractLoginRepository>(
-                            lazy: false,
-                            create: (context) => ApiLoginRepository(
-                              apiService: ApiService(
-                                onErrorHandler: (String code, String message,
-                                    String error) {
-                                  context.read<ErrorBloc>().add(
-                                        ShowDialogEvent(
-                                          title: code,
-                                          message: message,
-                                          error: error,
-                                        ),
-                                      );
-                                },
-                              ),
-                            ),
-                            child: BlocProvider<LoginBloc>(
-                              lazy: false,
-                              create: (context) => LoginBloc(
-                                repository:
-                                    context.read<AbstractLoginRepository>(),
-                              ),
-                              child: LoginPage(),
-                            ),
-                          ),
-                        );
+                        return LoginPage();
                       },
                     );
                   }
@@ -195,41 +168,7 @@ class MyApp extends StatelessWidget {
                   if (settings.name == TasksPage.navigationPath) {
                     return MaterialPageRoute(
                       builder: (_) {
-                        return BlocProvider<ErrorBloc>(
-                          lazy: false,
-                          create: (context) => ErrorBloc(context: context),
-                          child: RepositoryProvider<AbstractTasksRepository>(
-                            lazy: false,
-                            create: (context) => ApiTasksRepository(
-                              apiService: ApiService(
-                                onErrorHandler: (String code, String message,
-                                    String error) {
-                                  context.read<ErrorBloc>().add(
-                                        ShowDialogEvent(
-                                          title: code,
-                                          message: message,
-                                          error: error,
-                                        ),
-                                      );
-                                },
-                              ),
-                            ),
-                            child: BlocProvider<SortingBloc>(
-                              lazy: false,
-                              create: (context) => SortingBloc(
-                                sortByReverse: false,
-                              ),
-                              child: BlocProvider<TasksBloc>(
-                                lazy: false,
-                                create: (context) => TasksBloc(
-                                  repository:
-                                      context.read<AbstractTasksRepository>(),
-                                ),
-                                child: const TasksPage(),
-                              ),
-                            ),
-                          ),
-                        );
+                        return const TasksPage();
                       },
                     );
                   }

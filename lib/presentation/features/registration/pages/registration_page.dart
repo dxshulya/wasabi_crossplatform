@@ -6,6 +6,7 @@ import 'package:wasabi_crossplatform/presentation/features/registration/bloc/reg
 import 'package:wasabi_crossplatform/presentation/features/registration/widgets/email_text_field.dart';
 import 'package:wasabi_crossplatform/presentation/features/registration/widgets/name_text_field.dart';
 import 'package:wasabi_crossplatform/presentation/features/registration/widgets/password_text_field.dart';
+import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/tasks_list.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/pages/tasks_page.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 import 'package:wasabi_crossplatform/utils/datastore/datastore.dart';
