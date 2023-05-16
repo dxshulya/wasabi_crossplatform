@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wasabi_crossplatform/presentation/features/intro/pages/intro_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/registration/pages/registration_page.dart';
-import 'package:wasabi_crossplatform/presentation/features/tasks/widgets/tasks_list.dart';
 import 'package:wasabi_crossplatform/presentation/features/tasks/pages/tasks_page.dart';
 import 'package:wasabi_crossplatform/utils/colors.dart';
 import 'package:wasabi_crossplatform/utils/datastore/datastore.dart';
