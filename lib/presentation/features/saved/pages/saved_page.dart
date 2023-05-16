@@ -7,7 +7,7 @@ import 'package:wasabi_crossplatform/data/services/api/api_service.dart';
 import 'package:wasabi_crossplatform/domain/repositories/saved/abstract_saved_repository.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/saved/bloc/saved_event.dart';
-import 'package:wasabi_crossplatform/presentation/features/saved/pages/saved_list.dart';
+import 'package:wasabi_crossplatform/presentation/features/saved/widgets/saved_list.dart';
 
 class SavedPage extends StatelessWidget {
   const SavedPage({Key? key}) : super(key: key);
