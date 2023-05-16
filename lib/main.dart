@@ -22,6 +22,7 @@ import 'package:wasabi_crossplatform/presentation/features/filtering/filters/blo
 import 'package:wasabi_crossplatform/presentation/features/intro/pages/intro_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/bloc/login_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/login/pages/login_page.dart';
+import 'package:wasabi_crossplatform/presentation/features/login/widgets/login_form.dart';
 import 'package:wasabi_crossplatform/presentation/features/not_found/pages/not_found_page.dart';
 import 'package:wasabi_crossplatform/presentation/features/registration/bloc/registration_bloc.dart';
 import 'package:wasabi_crossplatform/presentation/features/registration/pages/registration_page.dart';
@@ -115,7 +116,7 @@ class MyApp extends StatelessWidget {
                   if (settings.name == LoginPage.navigationPath) {
                     return MaterialPageRoute(
                       builder: (_) {
-                        return LoginPage();
+                        return const LoginPage();
                       },
                     );
                   }
