@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:wasabi_crossplatform/data/db/database.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_task.dart';
 
 abstract class FavouritesEvent extends Equatable {
@@ -9,13 +10,13 @@ abstract class FavouritesEvent extends Equatable {
 }
 
 class ChangedFavourite extends FavouritesEvent {
-  final AbstractTask model;
+  final TaskTableData model;
 
   const ChangedFavourite({required this.model});
 }
 
 class ChangedFavourites extends FavouritesEvent {
-  final List<AbstractTask> models;
+  final List<TaskTableData> models;
 
   const ChangedFavourites({required this.models});
 }

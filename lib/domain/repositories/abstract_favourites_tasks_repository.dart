@@ -1,3 +1,4 @@
+import 'package:wasabi_crossplatform/data/db/database.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_task.dart';
 
 abstract class AbstractFavouritesTasksRepository {
@@ -13,7 +14,7 @@ abstract class AbstractFavouritesTasksRepository {
 
   bool checkForFavourite(AbstractTask task);
 
-  Stream<List<AbstractTask>> onChangedFavourites();
+  Stream<List<TaskTableData>> onChangedFavourites();
 
-  Future<List<AbstractTask>> onGetAllFavourites();
+  Future<List<TaskTableData>> onGetAllFavourites();
 }

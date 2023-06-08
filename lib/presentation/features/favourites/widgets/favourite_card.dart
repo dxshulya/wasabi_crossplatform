@@ -67,7 +67,7 @@ class FavouriteCard extends StatelessWidget {
                       onPressed: () {
                         context.read<FavouritesBloc>().add(
                               ChangedFavourite(
-                                model: _model.toDomain(),
+                                model: _model.toCardModel(),
                               ),
                             );
                       },

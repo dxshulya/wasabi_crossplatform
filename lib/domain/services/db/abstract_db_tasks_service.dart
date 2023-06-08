@@ -1,9 +1,10 @@
+import 'package:wasabi_crossplatform/data/db/database.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_task.dart';
 
 abstract class AbstractDBTasksService {
   void close();
 
-  Future<List<AbstractTask>> getAllTasksDB();
+  Future<List<TaskTableData>> getAllTasksDB();
 
   Future<void> insertTaskDB(AbstractTask task);
 
@@ -11,5 +12,5 @@ abstract class AbstractDBTasksService {
 
   Future<void> deleteAll();
 
-  Stream<List<AbstractTask>> onChangedTasksDB();
+  Stream<List<TaskTableData>> onChangedTasksDB();
 }

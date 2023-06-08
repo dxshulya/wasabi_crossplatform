@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wasabi_crossplatform/data/mappers/db/db_data_mapper.dart';
 import 'package:wasabi_crossplatform/domain/repositories/abstract_favourites_tasks_repository.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_event.dart';
 import 'package:wasabi_crossplatform/presentation/features/favourites/bloc/favourites_state.dart';
@@ -24,10 +25,10 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
       ChangedFavourite event, Emitter<FavouritesState> emit) {
     final domainModel = event.model;
 
-    if (_repository.checkForFavourite(domainModel)) {
-      _repository.deleteFavourite(domainModel);
+    if (_repository.checkForFavourite(domainModel.toDomain())) {
+      _repository.deleteFavourite(domainModel.toDomain());
     } else {
-      _repository.insertFavourite(domainModel);
+      _repository.insertFavourite(domainModel.toDomain());
     }
   }
 

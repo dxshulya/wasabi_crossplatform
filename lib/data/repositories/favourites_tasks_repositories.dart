@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:wasabi_crossplatform/data/db/database.dart';
 import 'package:wasabi_crossplatform/data/services/db/db_tasks_service.dart';
 import 'package:wasabi_crossplatform/domain/models/tasks/abstract_task.dart';
 import 'package:wasabi_crossplatform/domain/repositories/abstract_favourites_tasks_repository.dart';
@@ -12,7 +13,7 @@ class FavouritesTasksRepository implements AbstractFavouritesTasksRepository {
     _service.onChangedTasksDB().listen(_update);
   }
 
-  void _update(List<AbstractTask> tasks) {
+  void _update(List<TaskTableData> tasks) {
     _favouritesTasksIds.clear();
     for (var task in tasks) {
       _favouritesTasksIds.add(task.id);
@@ -45,12 +46,12 @@ class FavouritesTasksRepository implements AbstractFavouritesTasksRepository {
   }
 
   @override
-  Stream<List<AbstractTask>> onChangedFavourites() async* {
+  Stream<List<TaskTableData>> onChangedFavourites() async* {
     yield* _service.onChangedTasksDB();
   }
 
   @override
-  Future<List<AbstractTask>> onGetAllFavourites() async {
+  Future<List<TaskTableData>> onGetAllFavourites() async {
     return _service.getAllTasksDB();
   }
 

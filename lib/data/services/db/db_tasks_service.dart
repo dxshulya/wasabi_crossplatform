@@ -13,11 +13,11 @@ class DBTasksService implements AbstractDBTasksService {
   }
 
   @override
-  Future<List<AbstractTask>> getAllTasksDB() async {
+  Future<List<TaskTableData>> getAllTasksDB() async {
     var tasksDB = await _database.select(_database.taskTable).get();
 
     return tasksDB
-        .map((TaskTableData taskTableData) => taskTableData.toDomain())
+        .map((TaskTableData taskTableData) => taskTableData)
         .toList();
   }
 
@@ -42,9 +42,9 @@ class DBTasksService implements AbstractDBTasksService {
   }
 
   @override
-  Stream<List<AbstractTask>> onChangedTasksDB() {
+  Stream<List<TaskTableData>> onChangedTasksDB() {
     return (_database.select(_database.taskTable))
-        .map((TaskTableData taskTableData) => taskTableData.toDomain())
+        .map((TaskTableData taskTableData) => taskTableData)
         .watch();
   }
 }

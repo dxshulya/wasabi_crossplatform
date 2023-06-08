@@ -53,6 +53,16 @@ extension TaskCardModelToDomain on TaskCardModel {
       );
 }
 
+extension TaskCardModelToTaskTableData on TaskCardModel {
+  TaskTableData toCardModel() => TaskTableData(
+      id: id,
+      formula: formula,
+      task: task,
+      answer: answer,
+      datetime: datetime,
+      type: type);
+}
+
 extension SavedCardModelToDomain on SavedCardModel {
   AbstractTask toDomain() => BaseTask(
         id,
@@ -73,4 +83,14 @@ extension FavouriteCardModelToDomain on FavouriteCardModel {
         datetime,
         type,
       );
+}
+
+extension FavouriteCardModelToCardModel on FavouriteCardModel {
+  TaskTableData toCardModel() => TaskTableData(
+      id: id,
+      formula: formula,
+      task: task,
+      answer: answer,
+      datetime: datetime,
+      type: type);
 }
